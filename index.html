@@ -2,39 +2,64 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
 <title>The Tower of Time</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
 
-body{
+html,body{
     margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
     overflow:hidden;
     font-family:Arial,sans-serif;
     background:#000;
     color:white;
+    touch-action:none;
 }
 
-canvas{display:block}
+canvas{
+    display:block;
+}
 
-/* MENÚ */
+/* =========================
+   MENÚ
+========================= */
+
 #menu{
     position:absolute;
     inset:0;
     z-index:20;
+
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    background:radial-gradient(circle,#29476b 0%,#111c2c 45%,#03050a 100%);
+
+    background:
+        radial-gradient(
+            circle,
+            #29476b 0%,
+            #111c2c 45%,
+            #03050a 100%
+        );
+
+    text-align:center;
 }
 
 #menu h1{
     font-size:60px;
     margin:0 0 10px;
-    text-shadow:0 0 20px #00c8ff;
-    text-align:center;
+
+    text-shadow:
+        0 0 20px #00c8ff;
 }
 
 #menu p{
@@ -50,25 +75,43 @@ canvas{display:block}
     width:250px;
     padding:16px;
     margin:8px;
+
     border:0;
     border-radius:12px;
+
     font-size:22px;
     font-weight:bold;
+
     cursor:pointer;
+
     background:#168cff;
     color:white;
-    box-shadow:0 0 15px #168cff;
+
+    box-shadow:
+        0 0 15px #168cff;
 }
 
-/* ALMACÉN */
+
+/* =========================
+   ALMACÉN
+========================= */
+
 #shop{
     position:absolute;
     inset:0;
+
     z-index:30;
+
     display:none;
-    background:rgba(3,8,16,.97);
+
+    background:
+        rgba(3,8,16,.97);
+
     overflow:auto;
+
     padding:30px;
+
+    touch-action:auto;
 }
 
 #shop h2{
@@ -78,79 +121,138 @@ canvas{display:block}
 
 #shopItems{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(190px,1fr)
+        );
+
     gap:18px;
+
     max-width:1000px;
+
     margin:30px auto;
 }
 
 .shopItem{
     background:#111d2e;
+
     border:2px solid #2b6ea8;
+
     border-radius:15px;
+
     padding:18px;
+
     text-align:center;
 }
 
 .shopItem button{
     border:0;
+
     border-radius:8px;
+
     padding:10px 15px;
+
     background:#1597ff;
+
     color:white;
+
     cursor:pointer;
+
     font-weight:bold;
 }
 
 #closeShop{
     display:block;
+
     margin:20px auto;
+
     padding:13px 30px;
+
     border:0;
+
     border-radius:10px;
+
     background:#d33;
+
     color:white;
+
     font-size:18px;
+
     cursor:pointer;
 }
 
-/* HUD */
+
+/* =========================
+   HUD
+========================= */
+
 #gameUI{
     position:absolute;
+
     top:15px;
     left:15px;
+
     z-index:10;
+
     display:none;
+
     pointer-events:none;
 }
 
 #timer{
     font-size:28px;
+
     font-weight:bold;
-    text-shadow:0 0 8px black;
+
+    text-shadow:
+        0 0 8px black;
 }
 
 #floorText{
     font-size:18px;
+
     margin-top:5px;
-    text-shadow:0 0 8px black;
+
+    text-shadow:
+        0 0 8px black;
 }
 
-/* CÓDIGOS */
+
+/* =========================
+   CÓDIGOS
+========================= */
+
 #codePanel{
     position:absolute;
+
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+
+    transform:
+        translate(-50%,-50%);
+
     z-index:50;
+
     display:none;
+
     width:330px;
+
     background:#101a29;
+
     border:2px solid #238fff;
+
     border-radius:15px;
+
     padding:25px;
+
     text-align:center;
-    box-shadow:0 0 30px #238fff;
+
+    box-shadow:
+        0 0 30px #238fff;
+
+    touch-action:auto;
 }
 
 #codePanel h2{
@@ -159,113 +261,424 @@ canvas{display:block}
 
 #codeInput{
     width:100%;
+
     padding:12px;
+
     border-radius:8px;
+
     border:0;
+
     margin:10px 0;
+
     font-size:17px;
+
     text-align:center;
 }
 
 #redeemCode,
 #closeCode{
     width:100%;
+
     padding:12px;
+
     border:0;
+
     border-radius:8px;
+
     color:white;
+
     cursor:pointer;
 }
 
 #redeemCode{
     background:#168cff;
+
     font-weight:bold;
 }
 
 #closeCode{
     margin-top:10px;
+
     background:#555;
 }
 
-/* MENSAJE */
+
+/* =========================
+   MENSAJE
+========================= */
+
 #message{
     position:absolute;
+
     left:50%;
     bottom:35px;
-    transform:translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     z-index:60;
+
     display:none;
-    background:rgba(0,0,0,.85);
+
+    background:
+        rgba(0,0,0,.85);
+
     padding:14px 25px;
+
     border-radius:10px;
+
     font-size:18px;
+
     text-align:center;
+
+    max-width:90%;
 }
 
-/* CREADOR */
+
+/* =========================
+   CREADOR
+========================= */
+
 #creatorPanel{
     position:absolute;
+
     right:15px;
     top:15px;
+
     z-index:15;
+
     display:none;
-    background:rgba(10,15,25,.85);
+
+    background:
+        rgba(10,15,25,.85);
+
     border:1px solid #4ba8ff;
+
     border-radius:10px;
+
     padding:12px;
+
     font-size:14px;
 }
 
-/* VICTORIA / MUERTE */
+
+/* =========================
+   VICTORIA / MUERTE
+========================= */
+
 #victoryScreen,
 #deathScreen{
     position:absolute;
+
     inset:0;
+
     z-index:70;
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
     flex-direction:column;
-    background:rgba(0,0,0,.88);
+
+    background:
+        rgba(0,0,0,.88);
+
     text-align:center;
+
+    touch-action:auto;
 }
 
 #victoryScreen h1{
     font-size:70px;
+
     color:#ffd83d;
-    text-shadow:0 0 25px #ffb000;
+
+    text-shadow:
+        0 0 25px #ffb000;
 }
 
 #deathScreen h1{
     font-size:70px;
+
     color:#ff3333;
-    text-shadow:0 0 25px #ff0000;
+
+    text-shadow:
+        0 0 25px #ff0000;
 }
 
 #victoryScreen button,
 #deathScreen button{
     padding:15px 35px;
+
     border:0;
+
     border-radius:10px;
+
     background:#168cff;
+
     color:white;
+
     font-size:20px;
+
     cursor:pointer;
+}
+
+
+/* =========================================================
+   CONTROLES CELULAR
+========================================================= */
+
+#mobileControls{
+    position:absolute;
+
+    inset:0;
+
+    z-index:40;
+
+    display:none;
+
+    pointer-events:none;
+}
+
+
+/* JOYSTICK */
+
+#joystickArea{
+    position:absolute;
+
+    left:20px;
+    bottom:25px;
+
+    width:145px;
+    height:145px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        2px solid
+        rgba(255,255,255,.25);
+
+    pointer-events:auto;
+}
+
+#joystickStick{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:62px;
+    height:62px;
+
+    margin-left:-31px;
+    margin-top:-31px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.45);
+
+    border:
+        2px solid
+        rgba(255,255,255,.7);
+
+    box-shadow:
+        0 0 15px
+        rgba(255,255,255,.25);
+}
+
+
+/* BOTÓN SALTO */
+
+#jumpButton{
+    position:absolute;
+
+    right:25px;
+    bottom:35px;
+
+    width:85px;
+    height:85px;
+
+    border-radius:50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,.6);
+
+    background:
+        rgba(30,145,255,.65);
+
+    color:white;
+
+    font-size:17px;
+    font-weight:bold;
+
+    pointer-events:auto;
+
+    box-shadow:
+        0 0 20px
+        rgba(30,145,255,.5);
+}
+
+
+/* BOTÓN CÓDIGO */
+
+#mobileCodeButton{
+    position:absolute;
+
+    right:20px;
+    top:20px;
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,.5);
+
+    background:
+        rgba(15,100,180,.8);
+
+    color:white;
+
+    font-weight:bold;
+
+    pointer-events:auto;
+}
+
+
+/* MENSAJE DE CÁMARA */
+
+#cameraHint{
+    position:absolute;
+
+    bottom:180px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        rgba(0,0,0,.45);
+
+    border-radius:10px;
+
+    padding:8px 12px;
+
+    font-size:12px;
+
+    opacity:.7;
+
+    pointer-events:none;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media(max-width:800px){
+
+    #menu h1{
+        font-size:38px;
+
+        max-width:90%;
+    }
+
+    #menu p{
+        font-size:14px;
+    }
+
+    .menuBtn{
+        width:220px;
+
+        padding:14px;
+
+        font-size:19px;
+    }
+
+    #stats{
+        font-size:15px;
+    }
+
+    #timer{
+        font-size:22px;
+    }
+
+    #floorText{
+        font-size:15px;
+    }
+
+    #creatorPanel{
+        font-size:11px;
+    }
+
+    #victoryScreen h1,
+    #deathScreen h1{
+        font-size:48px;
+    }
+
+}
+
+
+/* CELULAR HORIZONTAL */
+
+@media(max-height:500px){
+
+    #joystickArea{
+        width:115px;
+        height:115px;
+
+        bottom:15px;
+        left:15px;
+    }
+
+    #joystickStick{
+        width:50px;
+        height:50px;
+
+        margin-left:-25px;
+        margin-top:-25px;
+    }
+
+    #jumpButton{
+        width:70px;
+        height:70px;
+
+        bottom:20px;
+        right:20px;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- MENÚ -->
+
+<!-- =====================================================
+     MENÚ
+===================================================== -->
 
 <div id="menu">
 
-    <h1>THE TOWER OF TIME</h1>
+    <h1>
+        THE TOWER OF TIME
+    </h1>
 
-    <p>Sobrevive hasta llegar a la cima</p>
+    <p>
+        Sobrevive hasta llegar a la cima
+    </p>
 
     <div id="stats">
+
         🪙 Monedas:
         <span id="menuCoins">0</span>
 
@@ -273,24 +686,37 @@ canvas{display:block}
 
         🏆 Victorias:
         <span id="menuWins">0</span>
+
     </div>
 
-    <button class="menuBtn" id="playBtn">
+    <button
+        class="menuBtn"
+        id="playBtn">
+
         JUGAR
+
     </button>
 
-    <button class="menuBtn" id="shopBtn">
+    <button
+        class="menuBtn"
+        id="shopBtn">
+
         ALMACÉN
+
     </button>
 
 </div>
 
 
-<!-- ALMACÉN -->
+<!-- =====================================================
+     ALMACÉN
+===================================================== -->
 
 <div id="shop">
 
-    <h2>ALMACÉN</h2>
+    <h2>
+        ALMACÉN
+    </h2>
 
     <div id="shopItems"></div>
 
@@ -301,7 +727,9 @@ canvas{display:block}
 </div>
 
 
-<!-- HUD -->
+<!-- =====================================================
+     HUD
+===================================================== -->
 
 <div id="gameUI">
 
@@ -316,7 +744,9 @@ canvas{display:block}
 </div>
 
 
-<!-- CREADOR -->
+<!-- =====================================================
+     CREADOR
+===================================================== -->
 
 <div id="creatorPanel">
 
@@ -341,11 +771,15 @@ canvas{display:block}
 </div>
 
 
-<!-- CÓDIGOS -->
+<!-- =====================================================
+     CÓDIGOS
+===================================================== -->
 
 <div id="codePanel">
 
-    <h2>CANJEAR CÓDIGO</h2>
+    <h2>
+        CANJEAR CÓDIGO
+    </h2>
 
     <input
         id="codeInput"
@@ -364,16 +798,22 @@ canvas{display:block}
 </div>
 
 
-<!-- MENSAJES -->
+<!-- =====================================================
+     MENSAJE
+===================================================== -->
 
 <div id="message"></div>
 
 
-<!-- VICTORIA -->
+<!-- =====================================================
+     VICTORIA
+===================================================== -->
 
 <div id="victoryScreen">
 
-    <h1>¡VICTORIA!</h1>
+    <h1>
+        ¡VICTORIA!
+    </h1>
 
     <p>
         Has sobrevivido a The Tower of Time
@@ -386,11 +826,15 @@ canvas{display:block}
 </div>
 
 
-<!-- MUERTE -->
+<!-- =====================================================
+     MUERTE
+===================================================== -->
 
 <div id="deathScreen">
 
-    <h1>¡HAS MUERTO!</h1>
+    <h1>
+        ¡HAS MUERTO!
+    </h1>
 
     <p>
         Caíste de la torre.
@@ -403,15 +847,45 @@ canvas{display:block}
 </div>
 
 
+<!-- =====================================================
+     CONTROLES MÓVILES
+===================================================== -->
+
+<div id="mobileControls">
+
+    <div id="joystickArea">
+
+        <div id="joystickStick"></div>
+
+    </div>
+
+
+    <button id="jumpButton">
+        SALTAR
+    </button>
+
+
+    <button id="mobileCodeButton">
+        K
+    </button>
+
+
+    <div id="cameraHint">
+        Arrastra la pantalla para mover la cámara
+    </div>
+
+</div>
+
+
 <script type="module">
 
 import * as THREE from
 "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 
-/* =========================================================
+/* =====================================================
    CONFIGURACIÓN
-========================================================= */
+===================================================== */
 
 const FLOOR_COUNT = 6;
 
@@ -424,41 +898,66 @@ const HEX_RADIUS = 1.25;
 const HEX_HEIGHT = .35;
 
 
-/* =========================================================
+/* =====================================================
    DATOS
-========================================================= */
+===================================================== */
 
 let coins =
-    Number(localStorage.getItem("towerCoins")) || 0;
+    Number(
+        localStorage.getItem(
+            "towerCoins"
+        )
+    ) || 0;
+
 
 let wins =
-    Number(localStorage.getItem("towerWins")) || 0;
+    Number(
+        localStorage.getItem(
+            "towerWins"
+        )
+    ) || 0;
+
 
 let unlockedAnimals =
     JSON.parse(
-        localStorage.getItem("towerAnimals") ||
+        localStorage.getItem(
+            "towerAnimals"
+        ) ||
         '["dog"]'
     );
 
+
 let selectedAnimal =
-    localStorage.getItem("towerSelected") ||
+    localStorage.getItem(
+        "towerSelected"
+    ) ||
     "dog";
 
+
 let creatorUnlocked =
-    localStorage.getItem("creatorUnlocked") === "true";
+    localStorage.getItem(
+        "creatorUnlocked"
+    ) === "true";
+
 
 let motorcycleUnlocked =
-    localStorage.getItem("motorcycleUnlocked") === "true";
+    localStorage.getItem(
+        "motorcycleUnlocked"
+    ) === "true";
+
 
 let usedCodes =
     JSON.parse(
-        localStorage.getItem("usedCodes") || "[]"
+        localStorage.getItem(
+            "usedCodes"
+        ) ||
+        "[]"
     );
 
 
-/* =========================================================
+/* =====================================================
    ESTADOS
-========================================================= */
+===================================================== */
 
 let codePaused = false;
 
@@ -473,9 +972,33 @@ let creatorFly = false;
 let isGrounded = true;
 
 
-/* =========================================================
+/* =====================================================
+   CONTROLES MÓVILES
+===================================================== */
+
+const isMobile =
+    /Android|iPhone|iPad|iPod|Mobile/i
+        .test(navigator.userAgent);
+
+
+let mobileMoveX = 0;
+
+let mobileMoveZ = 0;
+
+let joystickActive = false;
+
+let joystickPointerId = null;
+
+let cameraTouchId = null;
+
+let cameraTouchX = 0;
+
+let cameraTouchY = 0;
+
+
+/* =====================================================
    ANIMALES
-========================================================= */
+===================================================== */
 
 const animals = [
 
@@ -546,15 +1069,19 @@ const animals = [
 ];
 
 
-/* =========================================================
+/* =====================================================
    THREE.JS
-========================================================= */
+===================================================== */
 
 const scene =
     new THREE.Scene();
 
+
 scene.background =
-    new THREE.Color(0x09111e);
+    new THREE.Color(
+        0x09111e
+    );
+
 
 scene.fog =
     new THREE.Fog(
@@ -567,7 +1094,8 @@ scene.fog =
 const camera =
     new THREE.PerspectiveCamera(
         70,
-        innerWidth / innerHeight,
+        innerWidth /
+        innerHeight,
         .1,
         500
     );
@@ -584,20 +1112,27 @@ renderer.setSize(
     innerHeight
 );
 
+
 renderer.setPixelRatio(
-    Math.min(devicePixelRatio,2)
+    Math.min(
+        devicePixelRatio,
+        2
+    )
 );
 
-renderer.shadowMap.enabled = true;
+
+renderer.shadowMap.enabled =
+    true;
+
 
 document.body.appendChild(
     renderer.domElement
 );
 
 
-/* =========================================================
+/* =====================================================
    LUCES
-========================================================= */
+===================================================== */
 
 scene.add(
     new THREE.AmbientLight(
@@ -613,22 +1148,27 @@ const sun =
         2.5
     );
 
+
 sun.position.set(
     20,
     50,
     20
 );
 
-sun.castShadow = true;
+
+sun.castShadow =
+    true;
+
 
 scene.add(sun);
 
 
-/* =========================================================
+/* =====================================================
    PISOS
-========================================================= */
+===================================================== */
 
 const floors = [];
+
 
 const hexGeometry =
     new THREE.CylinderGeometry(
@@ -644,37 +1184,60 @@ function createFloor(index){
     const group =
         new THREE.Group();
 
+
     group.position.y =
-        index * FLOOR_HEIGHT;
+        index *
+        FLOOR_HEIGHT;
+
 
     scene.add(group);
 
+
     const tiles = [];
 
+
     const spacingX =
-        HEX_RADIUS * 1.75;
+        HEX_RADIUS *
+        1.75;
+
 
     const spacingZ =
-        HEX_RADIUS * 1.52;
+        HEX_RADIUS *
+        1.52;
 
 
-    for(let row=-5;row<=5;row++){
+    for(
+        let row=-5;
+        row<=5;
+        row++
+    ){
 
-        for(let col=-5;col<=5;col++){
+        for(
+            let col=-5;
+            col<=5;
+            col++
+        ){
 
             const x =
-                col * spacingX +
-                ((row & 1)
+                col *
+                spacingX +
+                (
+                    (row & 1)
                     ? spacingX / 2
-                    : 0);
+                    : 0
+                );
+
 
             const z =
-                row * spacingZ;
+                row *
+                spacingZ;
 
 
             if(
-                Math.abs(x) > FLOOR_SIZE/2 ||
-                Math.abs(z) > FLOOR_SIZE/2
+                Math.abs(x) >
+                    FLOOR_SIZE/2 ||
+                Math.abs(z) >
+                    FLOOR_SIZE/2
             ){
 
                 continue;
@@ -687,8 +1250,8 @@ function createFloor(index){
 
                     color:
                         index === 5
-                            ? 0x29a8ff
-                            : 0x2876b5,
+                        ? 0x29a8ff
+                        : 0x2876b5,
 
                     roughness:.7
 
@@ -708,9 +1271,14 @@ function createFloor(index){
                 z
             );
 
-            tile.castShadow = true;
 
-            tile.receiveShadow = true;
+            tile.castShadow =
+                true;
+
+
+            tile.receiveShadow =
+                true;
+
 
             group.add(tile);
 
@@ -760,12 +1328,13 @@ for(
 }
 
 
-/* =========================================================
+/* =====================================================
    JUGADOR
-========================================================= */
+===================================================== */
 
 const player =
     new THREE.Group();
+
 
 scene.add(player);
 
@@ -776,47 +1345,67 @@ let playerVelocity =
 
 const bodyMaterial =
     new THREE.MeshStandardMaterial({
+
         color:0x3b82f6
+
     });
 
 
 const body =
     new THREE.Mesh(
+
         new THREE.CylinderGeometry(
             .55,
             .65,
             1.2,
             12
         ),
+
         bodyMaterial
+
     );
 
-body.position.y = .95;
 
-body.castShadow = true;
+body.position.y =
+    .95;
+
+
+body.castShadow =
+    true;
+
 
 player.add(body);
 
 
 const headMaterial =
     new THREE.MeshStandardMaterial({
+
         color:0xf2c39b
+
     });
 
 
 const head =
     new THREE.Mesh(
+
         new THREE.SphereGeometry(
             .48,
             16,
             16
         ),
+
         headMaterial
+
     );
 
-head.position.y = 1.8;
 
-head.castShadow = true;
+head.position.y =
+    1.8;
+
+
+head.castShadow =
+    true;
+
 
 player.add(head);
 
@@ -825,7 +1414,9 @@ player.add(head);
 
 const eyeMaterial =
     new THREE.MeshBasicMaterial({
+
         color:0xffffff
+
     });
 
 
@@ -835,19 +1426,24 @@ for(
 
     const eye =
         new THREE.Mesh(
+
             new THREE.SphereGeometry(
                 .07,
                 8,
                 8
             ),
+
             eyeMaterial
+
         );
+
 
     eye.position.set(
         x,
         1.85,
         -.42
     );
+
 
     player.add(eye);
 
@@ -862,14 +1458,18 @@ for(
 
     const leg =
         new THREE.Mesh(
+
             new THREE.CylinderGeometry(
                 .13,
                 .15,
                 .7,
                 8
             ),
+
             bodyMaterial
+
         );
+
 
     leg.position.set(
         x,
@@ -877,20 +1477,22 @@ for(
         0
     );
 
+
     player.add(leg);
 
 }
 
 
-/* =========================================================
-   APARIENCIA SPIDER-MAN
-========================================================= */
+/* =====================================================
+   SPIDER-MAN
+===================================================== */
 
 function makeSpiderMan(){
 
     body.material.color.set(
         0xc90000
     );
+
 
     head.material.color.set(
         0xd71920
@@ -923,7 +1525,8 @@ function makeSpiderMan(){
 function updatePlayerAppearance(){
 
     if(
-        selectedAnimal === "spider"
+        selectedAnimal ===
+        "spider"
     ){
 
         makeSpiderMan();
@@ -954,22 +1557,26 @@ function updatePlayerAppearance(){
     };
 
 
-    body.material.color.set(
+    const color =
         colors[selectedAnimal] ||
-        0x3b82f6
+        0x3b82f6;
+
+
+    body.material.color.set(
+        color
     );
 
+
     head.material.color.set(
-        colors[selectedAnimal] ||
-        0xf2c39b
+        color
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    TECLADO
-========================================================= */
+===================================================== */
 
 const keys = {};
 
@@ -980,8 +1587,6 @@ window.addEventListener(
 
         keys[e.code] = true;
 
-
-        /* K = CÓDIGOS */
 
         if(
             e.code === "KeyK" &&
@@ -995,8 +1600,6 @@ window.addEventListener(
         }
 
 
-        /* M = CREADOR */
-
         if(
             e.code === "KeyM" &&
             creatorUnlocked &&
@@ -1009,8 +1612,8 @@ window.addEventListener(
 
             creatorPanel.style.display =
                 creatorFly
-                    ? "block"
-                    : "none";
+                ? "block"
+                : "none";
 
 
             playerVelocity.set(
@@ -1044,19 +1647,21 @@ window.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    PANEL DE CÓDIGOS
-========================================================= */
+===================================================== */
 
 function toggleCodePanel(){
 
     if(
         codePanel.style.display ===
             "none" ||
-        codePanel.style.display === ""
+        codePanel.style.display ===
+            ""
     ){
 
         codePaused = true;
+
 
         codePanel.style.display =
             "block";
@@ -1072,7 +1677,11 @@ function toggleCodePanel(){
 
 
         setTimeout(
-            () => codeInput.focus(),
+            () => {
+
+                codeInput.focus();
+
+            },
             50
         );
 
@@ -1082,8 +1691,10 @@ function toggleCodePanel(){
 
         codePaused = false;
 
+
         codePanel.style.display =
             "none";
+
 
         codeInput.blur();
 
@@ -1104,13 +1715,14 @@ closeCode.onclick = () => {
 };
 
 
-/* =========================================================
+/* =====================================================
    CÁMARA
-========================================================= */
+===================================================== */
 
 let cameraYaw = .5;
 
 let cameraPitch = .35;
+
 
 let dragging = false;
 
@@ -1125,10 +1737,13 @@ renderer.domElement.addEventListener(
 
         if(codePaused)return;
 
+
         dragging = true;
+
 
         lastMouseX =
             e.clientX;
+
 
         lastMouseY =
             e.clientY;
@@ -1165,6 +1780,7 @@ window.addEventListener(
             e.clientX -
             lastMouseX;
 
+
         const dy =
             e.clientY -
             lastMouseY;
@@ -1172,6 +1788,7 @@ window.addEventListener(
 
         lastMouseX =
             e.clientX;
+
 
         lastMouseY =
             e.clientY;
@@ -1193,13 +1810,367 @@ window.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
+   CÁMARA TÁCTIL
+===================================================== */
+
+renderer.domElement.addEventListener(
+    "touchstart",
+    e => {
+
+        if(
+            !isMobile ||
+            codePaused
+        ){
+
+            return;
+
+        }
+
+
+        for(
+            const touch of e.changedTouches
+        ){
+
+            if(
+                cameraTouchId === null
+            ){
+
+                cameraTouchId =
+                    touch.identifier;
+
+
+                cameraTouchX =
+                    touch.clientX;
+
+
+                cameraTouchY =
+                    touch.clientY;
+
+            }
+
+        }
+
+    },
+    {passive:false}
+);
+
+
+renderer.domElement.addEventListener(
+    "touchmove",
+    e => {
+
+        if(
+            !isMobile ||
+            codePaused
+        ){
+
+            return;
+
+        }
+
+
+        for(
+            const touch of e.changedTouches
+        ){
+
+            if(
+                touch.identifier ===
+                cameraTouchId
+            ){
+
+                const dx =
+                    touch.clientX -
+                    cameraTouchX;
+
+
+                const dy =
+                    touch.clientY -
+                    cameraTouchY;
+
+
+                cameraTouchX =
+                    touch.clientX;
+
+
+                cameraTouchY =
+                    touch.clientY;
+
+
+                cameraYaw -=
+                    dx * .006;
+
+
+                cameraPitch =
+                    THREE.MathUtils.clamp(
+                        cameraPitch -
+                            dy * .004,
+                        -.2,
+                        1.1
+                    );
+
+            }
+
+        }
+
+
+        e.preventDefault();
+
+    },
+    {passive:false}
+);
+
+
+renderer.domElement.addEventListener(
+    "touchend",
+    e => {
+
+        for(
+            const touch of e.changedTouches
+        ){
+
+            if(
+                touch.identifier ===
+                cameraTouchId
+            ){
+
+                cameraTouchId =
+                    null;
+
+            }
+
+        }
+
+    },
+    {passive:false}
+);
+
+
+/* =====================================================
+   JOYSTICK
+===================================================== */
+
+const joystickArea =
+    document.getElementById(
+        "joystickArea"
+    );
+
+
+const joystickStick =
+    document.getElementById(
+        "joystickStick"
+    );
+
+
+function updateJoystick(
+    clientX,
+    clientY
+){
+
+    const rect =
+        joystickArea.getBoundingClientRect();
+
+
+    const centerX =
+        rect.left +
+        rect.width / 2;
+
+
+    const centerY =
+        rect.top +
+        rect.height / 2;
+
+
+    let dx =
+        clientX -
+        centerX;
+
+
+    let dy =
+        clientY -
+        centerY;
+
+
+    const max =
+        rect.width *
+        .32;
+
+
+    const length =
+        Math.sqrt(
+            dx*dx +
+            dy*dy
+        );
+
+
+    if(
+        length > max
+    ){
+
+        dx =
+            dx / length *
+            max;
+
+
+        dy =
+            dy / length *
+            max;
+
+    }
+
+
+    joystickStick.style.transform =
+        `translate(${dx}px,${dy}px)`;
+
+
+    mobileMoveX =
+        dx / max;
+
+
+    mobileMoveZ =
+        dy / max;
+
+}
+
+
+function resetJoystick(){
+
+    joystickActive =
+        false;
+
+
+    joystickPointerId =
+        null;
+
+
+    mobileMoveX = 0;
+
+    mobileMoveZ = 0;
+
+
+    joystickStick.style.transform =
+        "translate(0px,0px)";
+
+}
+
+
+joystickArea.addEventListener(
+    "pointerdown",
+    e => {
+
+        if(!isMobile)return;
+
+
+        joystickActive = true;
+
+        joystickPointerId =
+            e.pointerId;
+
+
+        joystickArea.setPointerCapture(
+            e.pointerId
+        );
+
+
+        updateJoystick(
+            e.clientX,
+            e.clientY
+        );
+
+    }
+);
+
+
+joystickArea.addEventListener(
+    "pointermove",
+    e => {
+
+        if(
+            !joystickActive ||
+            e.pointerId !==
+                joystickPointerId
+        ){
+
+            return;
+
+        }
+
+
+        updateJoystick(
+            e.clientX,
+            e.clientY
+        );
+
+    }
+);
+
+
+joystickArea.addEventListener(
+    "pointerup",
+    resetJoystick
+);
+
+
+joystickArea.addEventListener(
+    "pointercancel",
+    resetJoystick
+);
+
+
+/* =====================================================
+   BOTÓN SALTO
+===================================================== */
+
+jumpButton.addEventListener(
+    "pointerdown",
+    e => {
+
+        e.preventDefault();
+
+
+        if(
+            gameRunning &&
+            !codePaused
+        ){
+
+            keys["Space"] =
+                true;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   BOTÓN CÓDIGO CELULAR
+===================================================== */
+
+mobileCodeButton.addEventListener(
+    "pointerdown",
+    e => {
+
+        e.preventDefault();
+
+
+        if(gameRunning){
+
+            toggleCodePanel();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
    BUSCAR PLATAFORMA
-========================================================= */
+===================================================== */
 
 function getTileUnderPlayer(){
 
     let best = null;
+
 
     let bestDistance =
         Infinity;
@@ -1229,11 +2200,13 @@ function getTileUnderPlayer(){
 
 
         const verticalDistance =
-            feetY - floorY;
+            feetY -
+            floorY;
 
 
         if(
-            verticalDistance > 8
+            verticalDistance >
+            8
         ){
 
             continue;
@@ -1306,9 +2279,9 @@ function getTileUnderPlayer(){
 }
 
 
-/* =========================================================
+/* =====================================================
    ACTIVAR PLATAFORMA
-========================================================= */
+===================================================== */
 
 function triggerTile(tile){
 
@@ -1322,7 +2295,9 @@ function triggerTile(tile){
     }
 
 
-    tile.disappearing = true;
+    tile.disappearing =
+        true;
+
 
     tile.disappearTime =
         performance.now();
@@ -1330,9 +2305,9 @@ function triggerTile(tile){
 }
 
 
-/* =========================================================
+/* =====================================================
    MUERTE
-========================================================= */
+===================================================== */
 
 function death(){
 
@@ -1345,19 +2320,31 @@ function death(){
     }
 
 
-    gameRunning = false;
+    gameRunning =
+        false;
 
-    codePaused = false;
 
-    creatorFly = false;
+    codePaused =
+        false;
+
+
+    creatorFly =
+        false;
+
 
     creatorPanel.style.display =
         "none";
 
+
     codePanel.style.display =
         "none";
 
+
     gameUI.style.display =
+        "none";
+
+
+    mobileControls.style.display =
         "none";
 
 
@@ -1374,9 +2361,9 @@ function death(){
 }
 
 
-/* =========================================================
+/* =====================================================
    JUGADOR
-========================================================= */
+===================================================== */
 
 function updatePlayer(delta){
 
@@ -1386,6 +2373,8 @@ function updatePlayer(delta){
     const direction =
         new THREE.Vector3();
 
+
+    /* PC */
 
     if(
         keys["KeyW"] ||
@@ -1427,6 +2416,20 @@ function updatePlayer(delta){
     }
 
 
+    /* CELULAR */
+
+    if(isMobile){
+
+        direction.x +=
+            mobileMoveX;
+
+
+        direction.z +=
+            mobileMoveZ;
+
+    }
+
+
     if(
         direction.length() > 0
     ){
@@ -1435,7 +2438,8 @@ function updatePlayer(delta){
 
 
         const rotated =
-            direction.clone()
+            direction
+                .clone()
                 .applyAxisAngle(
                     new THREE.Vector3(
                         0,
@@ -1448,8 +2452,8 @@ function updatePlayer(delta){
 
         const speed =
             creatorFly
-                ? 12
-                : 7;
+            ? 12
+            : 7;
 
 
         player.position.x +=
@@ -1473,7 +2477,9 @@ function updatePlayer(delta){
         playerVelocity.y = 0;
 
 
-        if(keys["Space"]){
+        if(
+            keys["Space"]
+        ){
 
             player.position.y +=
                 12 * delta;
@@ -1490,6 +2496,9 @@ function updatePlayer(delta){
                 12 * delta;
 
         }
+
+
+        keys["Space"] = false;
 
 
         return;
@@ -1528,9 +2537,13 @@ function updatePlayer(delta){
                 targetY;
 
 
-            playerVelocity.y = 0;
+            playerVelocity.y =
+                0;
 
-            isGrounded = true;
+
+            isGrounded =
+                true;
+
 
             currentFloor =
                 ground.floor.index;
@@ -1546,7 +2559,8 @@ function updatePlayer(delta){
 
     else{
 
-        isGrounded = false;
+        isGrounded =
+            false;
 
     }
 
@@ -1558,11 +2572,16 @@ function updatePlayer(delta){
         isGrounded
     ){
 
-        playerVelocity.y = 10;
+        playerVelocity.y =
+            10;
 
-        isGrounded = false;
 
-        keys["Space"] = false;
+        isGrounded =
+            false;
+
+
+        keys["Space"] =
+            false;
 
     }
 
@@ -1589,13 +2608,11 @@ function updatePlayer(delta){
         );
 
 
-    /* =========================================
-       AQUÍ ESTÁ LA CORRECCIÓN:
-       SI CAE DEMASIADO, MUERE.
-    ========================================= */
+    /* MUERTE POR CAÍDA */
 
     if(
-        player.position.y < -8
+        player.position.y <
+        -8
     ){
 
         death();
@@ -1607,9 +2624,9 @@ function updatePlayer(delta){
 }
 
 
-/* =========================================================
+/* =====================================================
    PLATAFORMAS
-========================================================= */
+===================================================== */
 
 function updateTiles(){
 
@@ -1642,10 +2659,6 @@ function updateTiles(){
                 tile.disappearTime;
 
 
-            /*
-             * ESPERA 1 SEGUNDO
-             */
-
             if(
                 elapsed < 1000
             ){
@@ -1655,20 +2668,19 @@ function updateTiles(){
             }
 
 
-            /*
-             * DESAPARECE DURANTE 0.3 SEGUNDOS
-             */
-
             const progress =
                 Math.min(
-                    (elapsed - 1000) /
-                        300,
+                    (
+                        elapsed -
+                        1000
+                    ) / 300,
                     1
                 );
 
 
             const scale =
-                1 - progress;
+                1 -
+                progress;
 
 
             tile.mesh.scale.set(
@@ -1682,9 +2694,12 @@ function updateTiles(){
                 progress >= 1
             ){
 
-                tile.visible = false;
+                tile.visible =
+                    false;
 
-                tile.mesh.visible = false;
+
+                tile.mesh.visible =
+                    false;
 
             }
 
@@ -1695,9 +2710,9 @@ function updateTiles(){
 }
 
 
-/* =========================================================
+/* =====================================================
    CÁMARA
-========================================================= */
+===================================================== */
 
 function updateCamera(delta){
 
@@ -1705,24 +2720,32 @@ function updateCamera(delta){
 
 
     const horizontal =
-        Math.cos(cameraPitch) *
+        Math.cos(
+            cameraPitch
+        ) *
         distance;
 
 
     const height =
-        Math.sin(cameraPitch) *
+        Math.sin(
+            cameraPitch
+        ) *
         distance;
 
 
     const x =
         player.position.x +
-        Math.sin(cameraYaw) *
+        Math.sin(
+            cameraYaw
+        ) *
         horizontal;
 
 
     const z =
         player.position.z +
-        Math.cos(cameraYaw) *
+        Math.cos(
+            cameraYaw
+        ) *
         horizontal;
 
 
@@ -1745,7 +2768,10 @@ function updateCamera(delta){
         1 -
         Math.pow(
             .001,
-            delta
+            Math.max(
+                delta,
+                .016
+            )
         )
     );
 
@@ -1759,9 +2785,9 @@ function updateCamera(delta){
 }
 
 
-/* =========================================================
+/* =====================================================
    TIEMPO
-========================================================= */
+===================================================== */
 
 function randomGameTime(){
 
@@ -1790,9 +2816,9 @@ function randomGameTime(){
 }
 
 
-/* =========================================================
+/* =====================================================
    VICTORIA
-========================================================= */
+===================================================== */
 
 function victory(){
 
@@ -1806,7 +2832,9 @@ function victory(){
     }
 
 
-    gameRunning = false;
+    gameRunning =
+        false;
+
 
     wins += 1;
 
@@ -1820,15 +2848,19 @@ function victory(){
         "none";
 
 
+    mobileControls.style.display =
+        "none";
+
+
     victoryScreen.style.display =
         "flex";
 
 }
 
 
-/* =========================================================
+/* =====================================================
    REINICIAR PLATAFORMAS
-========================================================= */
+===================================================== */
 
 function resetTiles(){
 
@@ -1840,13 +2872,21 @@ function resetTiles(){
             const tile of floor.tiles
         ){
 
-            tile.visible = true;
+            tile.visible =
+                true;
 
-            tile.disappearing = false;
 
-            tile.disappearTime = 0;
+            tile.disappearing =
+                false;
 
-            tile.mesh.visible = true;
+
+            tile.disappearTime =
+                0;
+
+
+            tile.mesh.visible =
+                true;
+
 
             tile.mesh.scale.set(
                 1,
@@ -1861,26 +2901,38 @@ function resetTiles(){
 }
 
 
-/* =========================================================
+/* =====================================================
    INICIAR PARTIDA
-========================================================= */
+===================================================== */
 
 function startGame(){
 
     menu.style.display =
         "none";
 
+
     shop.style.display =
         "none";
+
 
     victoryScreen.style.display =
         "none";
 
+
     deathScreen.style.display =
         "none";
 
+
     gameUI.style.display =
         "block";
+
+
+    if(isMobile){
+
+        mobileControls.style.display =
+            "block";
+
+    }
 
 
     resetTiles();
@@ -1889,7 +2941,8 @@ function startGame(){
     selectedAnimal =
         localStorage.getItem(
             "towerSelected"
-        ) || "dog";
+        ) ||
+        "dog";
 
 
     updatePlayerAppearance();
@@ -1910,16 +2963,25 @@ function startGame(){
     );
 
 
-    isGrounded = true;
+    isGrounded =
+        true;
 
-    currentFloor = 5;
 
-    creatorFly = false;
+    currentFloor =
+        5;
+
+
+    creatorFly =
+        false;
+
 
     creatorPanel.style.display =
         "none";
 
-    codePaused = false;
+
+    codePaused =
+        false;
+
 
     codePanel.style.display =
         "none";
@@ -1929,16 +2991,19 @@ function startGame(){
         randomGameTime();
 
 
-    gameRunning = true;
+    gameRunning =
+        true;
 
 
-    /* TIEMPO ESPECIAL */
+    resetJoystick();
+
 
     if(
         gameTime === 0
     ){
 
         coins += 500;
+
 
         saveData();
 
@@ -1964,14 +3029,15 @@ function startGame(){
 }
 
 
-/* =========================================================
+/* =====================================================
    INTERFAZ
-========================================================= */
+===================================================== */
 
 function updateUI(){
 
     menuCoins.textContent =
         coins;
+
 
     menuWins.textContent =
         wins;
@@ -1979,23 +3045,27 @@ function updateUI(){
 
     timer.textContent =
         gameTime === 0
-            ? "Tiempo: ESPECIAL"
-            : "Tiempo: " +
-              Math.ceil(gameTime);
+        ? "Tiempo: ESPECIAL"
+        : "Tiempo: " +
+          Math.ceil(
+              gameTime
+          );
 
 
     floorText.textContent =
         "Piso: " +
-        (currentFloor + 1) +
+        (
+            currentFloor + 1
+        ) +
         " / " +
         FLOOR_COUNT;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    GUARDAR
-========================================================= */
+===================================================== */
 
 function saveData(){
 
@@ -2047,13 +3117,14 @@ function saveData(){
 }
 
 
-/* =========================================================
+/* =====================================================
    ALMACÉN
-========================================================= */
+===================================================== */
 
 function renderShop(){
 
-    shopItems.innerHTML = "";
+    shopItems.innerHTML =
+        "";
 
 
     for(
@@ -2078,7 +3149,9 @@ function renderShop(){
 
         div.innerHTML = `
 
-            <div style="font-size:55px">
+            <div style="
+                font-size:55px
+            ">
                 ${animal.emoji}
             </div>
 
@@ -2095,13 +3168,13 @@ function renderShop(){
             <button>
                 ${
                     unlocked
-                        ? (
-                            selectedAnimal ===
-                            animal.id
-                                ? "SELECCIONADO"
-                                : "USAR"
-                          )
-                        : "COMPRAR"
+                    ? (
+                        selectedAnimal ===
+                        animal.id
+                        ? "SELECCIONADO"
+                        : "USAR"
+                      )
+                    : "COMPRAR"
                 }
             </button>
 
@@ -2116,67 +3189,79 @@ function renderShop(){
 
         if(unlocked){
 
-            button.onclick = () => {
+            button.onclick =
+                () => {
 
-                selectedAnimal =
-                    animal.id;
+                    selectedAnimal =
+                        animal.id;
 
-                saveData();
 
-                updatePlayerAppearance();
+                    saveData();
 
-                renderShop();
 
-            };
+                    updatePlayerAppearance();
+
+
+                    renderShop();
+
+                };
 
         }
 
         else{
 
-            button.onclick = () => {
+            button.onclick =
+                () => {
 
-                if(
-                    coins >=
-                        animal.price &&
-                    wins >=
-                        animal.winPrice
-                ){
+                    if(
+                        coins >=
+                            animal.price &&
+                        wins >=
+                            animal.winPrice
+                    ){
 
-                    coins -=
-                        animal.price;
+                        coins -=
+                            animal.price;
 
-                    wins -=
-                        animal.winPrice;
 
-                    unlockedAnimals.push(
-                        animal.id
-                    );
+                        wins -=
+                            animal.winPrice;
 
-                    selectedAnimal =
-                        animal.id;
 
-                    saveData();
+                        unlockedAnimals.push(
+                            animal.id
+                        );
 
-                    updateUI();
 
-                    renderShop();
+                        selectedAnimal =
+                            animal.id;
 
-                    showMessage(
-                        animal.name +
-                        " desbloqueado!"
-                    );
 
-                }
+                        saveData();
 
-                else{
 
-                    showMessage(
-                        "No tienes suficientes monedas o victorias."
-                    );
+                        updateUI();
 
-                }
 
-            };
+                        renderShop();
+
+
+                        showMessage(
+                            animal.name +
+                            " desbloqueado!"
+                        );
+
+                    }
+
+                    else{
+
+                        showMessage(
+                            "No tienes suficientes monedas o victorias."
+                        );
+
+                    }
+
+                };
 
         }
 
@@ -2208,7 +3293,9 @@ function renderShop(){
 
         div.innerHTML = `
 
-            <div style="font-size:55px">
+            <div style="
+                font-size:55px
+            ">
                 🕷️
             </div>
 
@@ -2228,8 +3315,8 @@ function renderShop(){
                 ${
                     selectedAnimal ===
                     "spider"
-                        ? "SELECCIONADO"
-                        : "USAR"
+                    ? "SELECCIONADO"
+                    : "USAR"
                 }
             </button>
 
@@ -2238,18 +3325,22 @@ function renderShop(){
 
         div.querySelector(
             "button"
-        ).onclick = () => {
+        ).onclick =
+            () => {
 
-            selectedAnimal =
-                "spider";
+                selectedAnimal =
+                    "spider";
 
-            saveData();
 
-            updatePlayerAppearance();
+                saveData();
 
-            renderShop();
 
-        };
+                updatePlayerAppearance();
+
+
+                renderShop();
+
+            };
 
 
         shopItems.appendChild(
@@ -2277,7 +3368,9 @@ function renderShop(){
 
         div.innerHTML = `
 
-            <div style="font-size:55px">
+            <div style="
+                font-size:55px
+            ">
                 🏍️
             </div>
 
@@ -2298,13 +3391,14 @@ function renderShop(){
 
         div.querySelector(
             "button"
-        ).onclick = () => {
+        ).onclick =
+            () => {
 
-            showMessage(
-                "Motocicleta seleccionada."
-            );
+                showMessage(
+                    "Motocicleta seleccionada."
+                );
 
-        };
+            };
 
 
         shopItems.appendChild(
@@ -2316,9 +3410,9 @@ function renderShop(){
 }
 
 
-/* =========================================================
+/* =====================================================
    MENSAJES
-========================================================= */
+===================================================== */
 
 let messageTimeout;
 
@@ -2328,8 +3422,10 @@ function showMessage(text){
     message.textContent =
         text;
 
+
     message.style.display =
         "block";
+
 
     clearTimeout(
         messageTimeout
@@ -2350,229 +3446,266 @@ function showMessage(text){
 }
 
 
-/* =========================================================
+/* =====================================================
    CÓDIGOS
-========================================================= */
+===================================================== */
 
-redeemCode.onclick = () => {
+redeemCode.onclick =
+    () => {
 
-    const code =
-        codeInput.value.trim();
+        const code =
+            codeInput.value.trim();
 
 
-    /* SPIDER */
-
-    if(
-        code === "spider"
-    ){
+        /* SPIDER */
 
         if(
-            !unlockedAnimals.includes(
-                "spider"
-            )
+            code === "spider"
         ){
 
-            unlockedAnimals.push(
-                "spider"
-            );
+            if(
+                !unlockedAnimals.includes(
+                    "spider"
+                )
+            ){
 
-            saveData();
-
-            renderShop();
-
-
-            showMessage(
-                "¡Spider-Man desbloqueado! Ya aparece en ALMACÉN."
-            );
-
-        }
-
-        else{
-
-            showMessage(
-                "Spider-Man ya está desbloqueado."
-            );
-
-        }
+                unlockedAnimals.push(
+                    "spider"
+                );
 
 
-        codeInput.value = "";
-
-        return;
-
-    }
+                saveData();
 
 
-    /* TOWER */
+                renderShop();
 
-    if(
-        code === "TOWER"
-    ){
 
-        if(
-            usedCodes.includes(
-                "TOWER"
-            )
-        ){
+                showMessage(
+                    "¡Spider-Man desbloqueado! Ya aparece en ALMACÉN."
+                );
 
-            showMessage(
-                "Ese código ya fue utilizado."
-            );
+            }
+
+            else{
+
+                showMessage(
+                    "Spider-Man ya está desbloqueado."
+                );
+
+            }
+
+
+            codeInput.value =
+                "";
+
 
             return;
 
         }
 
 
-        usedCodes.push(
-            "TOWER"
-        );
-
-
-        wins += 100;
-
-        coins += 100000;
-
-        motorcycleUnlocked = true;
-
-
-        saveData();
-
-        renderShop();
-
-        updateUI();
-
-
-        showMessage(
-            "¡TOWER activado! +100 victorias, +100000 monedas y motocicleta desbloqueada."
-        );
-
-
-        codeInput.value = "";
-
-        return;
-
-    }
-
-
-    /* CREATOR */
-
-    if(
-        code === "CREATOR"
-    ){
+        /* TOWER */
 
         if(
-            creatorUnlocked
+            code === "TOWER"
         ){
 
-            showMessage(
-                "El modo creador ya está desbloqueado. Pulsa M."
+            if(
+                usedCodes.includes(
+                    "TOWER"
+                )
+            ){
+
+                showMessage(
+                    "Ese código ya fue utilizado."
+                );
+
+
+                return;
+
+            }
+
+
+            usedCodes.push(
+                "TOWER"
             );
 
-        }
 
-        else{
+            wins += 100;
 
-            creatorUnlocked = true;
+            coins += 100000;
+
+
+            motorcycleUnlocked =
+                true;
+
 
             saveData();
 
 
+            renderShop();
+
+
+            updateUI();
+
+
             showMessage(
-                "Modo Creador desbloqueado. Ahora puedes usar M."
+                "¡TOWER activado! +100 victorias, +100000 monedas y motocicleta desbloqueada."
             );
+
+
+            codeInput.value =
+                "";
+
+
+            return;
 
         }
 
 
-        codeInput.value = "";
+        /* CREATOR */
 
-        return;
+        if(
+            code === "CREATOR"
+        ){
 
-    }
+            if(
+                creatorUnlocked
+            ){
+
+                showMessage(
+                    "El modo creador ya está desbloqueado. Pulsa M."
+                );
+
+            }
+
+            else{
+
+                creatorUnlocked =
+                    true;
 
 
-    showMessage(
-        "Código incorrecto."
-    );
-
-};
+                saveData();
 
 
-/* =========================================================
+                showMessage(
+                    "Modo Creador desbloqueado. Ahora puedes usar M."
+                );
+
+            }
+
+
+            codeInput.value =
+                "";
+
+
+            return;
+
+        }
+
+
+        showMessage(
+            "Código incorrecto."
+        );
+
+    };
+
+
+/* =====================================================
    BOTONES
-========================================================= */
+===================================================== */
 
-playBtn.onclick = () => {
+playBtn.onclick =
+    () => {
 
-    startGame();
+        startGame();
 
-};
-
-
-shopBtn.onclick = () => {
-
-    menu.style.display =
-        "none";
-
-    shop.style.display =
-        "block";
-
-    renderShop();
-
-};
+    };
 
 
-closeShop.onclick = () => {
+shopBtn.onclick =
+    () => {
 
-    shop.style.display =
-        "none";
-
-    menu.style.display =
-        "flex";
-
-    updateUI();
-
-};
+        menu.style.display =
+            "none";
 
 
-victoryBtn.onclick = () => {
-
-    victoryScreen.style.display =
-        "none";
-
-    gameUI.style.display =
-        "none";
-
-    menu.style.display =
-        "flex";
-
-    updateUI();
-
-};
+        shop.style.display =
+            "block";
 
 
-/* BOTÓN DE MUERTE */
+        renderShop();
 
-deathBtn.onclick = () => {
-
-    deathScreen.style.display =
-        "none";
-
-    gameUI.style.display =
-        "none";
-
-    menu.style.display =
-        "flex";
-
-    updateUI();
-
-};
+    };
 
 
-/* =========================================================
+closeShop.onclick =
+    () => {
+
+        shop.style.display =
+            "none";
+
+
+        menu.style.display =
+            "flex";
+
+
+        updateUI();
+
+    };
+
+
+victoryBtn.onclick =
+    () => {
+
+        victoryScreen.style.display =
+            "none";
+
+
+        gameUI.style.display =
+            "none";
+
+
+        mobileControls.style.display =
+            "none";
+
+
+        menu.style.display =
+            "flex";
+
+
+        updateUI();
+
+    };
+
+
+deathBtn.onclick =
+    () => {
+
+        deathScreen.style.display =
+            "none";
+
+
+        gameUI.style.display =
+            "none";
+
+
+        mobileControls.style.display =
+            "none";
+
+
+        menu.style.display =
+            "flex";
+
+
+        updateUI();
+
+    };
+
+
+/* =====================================================
    BUCLE PRINCIPAL
-========================================================= */
+===================================================== */
 
 let lastTime =
     performance.now();
@@ -2591,13 +3724,16 @@ function animate(){
 
     const delta =
         Math.min(
-            (now - lastTime) /
-                1000,
+            (
+                now -
+                lastTime
+            ) / 1000,
             .05
         );
 
 
-    lastTime = now;
+    lastTime =
+        now;
 
 
     if(
@@ -2619,7 +3755,9 @@ function animate(){
                 gameTime <= 0
             ){
 
-                gameTime = 0;
+                gameTime =
+                    0;
+
 
                 victory();
 
@@ -2633,19 +3771,14 @@ function animate(){
         );
 
 
-        /*
-         * Solo seguimos actualizando
-         * si el jugador no murió.
-         */
-
-        if(gameRunning){
+        if(
+            gameRunning
+        ){
 
             updateTiles();
 
 
-            /*
-             * LLEGAR A LA CIMA
-             */
+            /* LLEGAR A LA CIMA */
 
             if(
                 currentFloor >=
@@ -2668,8 +3801,8 @@ function animate(){
 
     updateCamera(
         codePaused
-            ? 0
-            : delta
+        ? 0
+        : delta
     );
 
 
@@ -2684,9 +3817,9 @@ function animate(){
 animate();
 
 
-/* =========================================================
+/* =====================================================
    RESIZE
-========================================================= */
+===================================================== */
 
 window.addEventListener(
     "resize",
@@ -2696,7 +3829,9 @@ window.addEventListener(
             innerWidth /
             innerHeight;
 
+
         camera.updateProjectionMatrix();
+
 
         renderer.setSize(
             innerWidth,
@@ -2707,9 +3842,17 @@ window.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    INICIO
-========================================================= */
+===================================================== */
+
+if(isMobile){
+
+    mobileControls.style.display =
+        "none";
+
+}
+
 
 updatePlayerAppearance();
 
