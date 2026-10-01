@@ -1,0 +1,2721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Tower of Time</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    background:#000;
+    color:white;
+}
+
+canvas{display:block}
+
+/* MENÚ */
+#menu{
+    position:absolute;
+    inset:0;
+    z-index:20;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:radial-gradient(circle,#29476b 0%,#111c2c 45%,#03050a 100%);
+}
+
+#menu h1{
+    font-size:60px;
+    margin:0 0 10px;
+    text-shadow:0 0 20px #00c8ff;
+    text-align:center;
+}
+
+#menu p{
+    color:#b8dfff;
+}
+
+#stats{
+    margin:15px;
+    font-size:18px;
+}
+
+.menuBtn{
+    width:250px;
+    padding:16px;
+    margin:8px;
+    border:0;
+    border-radius:12px;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#168cff;
+    color:white;
+    box-shadow:0 0 15px #168cff;
+}
+
+/* ALMACÉN */
+#shop{
+    position:absolute;
+    inset:0;
+    z-index:30;
+    display:none;
+    background:rgba(3,8,16,.97);
+    overflow:auto;
+    padding:30px;
+}
+
+#shop h2{
+    text-align:center;
+    font-size:42px;
+}
+
+#shopItems{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:18px;
+    max-width:1000px;
+    margin:30px auto;
+}
+
+.shopItem{
+    background:#111d2e;
+    border:2px solid #2b6ea8;
+    border-radius:15px;
+    padding:18px;
+    text-align:center;
+}
+
+.shopItem button{
+    border:0;
+    border-radius:8px;
+    padding:10px 15px;
+    background:#1597ff;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#closeShop{
+    display:block;
+    margin:20px auto;
+    padding:13px 30px;
+    border:0;
+    border-radius:10px;
+    background:#d33;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+/* HUD */
+#gameUI{
+    position:absolute;
+    top:15px;
+    left:15px;
+    z-index:10;
+    display:none;
+    pointer-events:none;
+}
+
+#timer{
+    font-size:28px;
+    font-weight:bold;
+    text-shadow:0 0 8px black;
+}
+
+#floorText{
+    font-size:18px;
+    margin-top:5px;
+    text-shadow:0 0 8px black;
+}
+
+/* CÓDIGOS */
+#codePanel{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    z-index:50;
+    display:none;
+    width:330px;
+    background:#101a29;
+    border:2px solid #238fff;
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 0 30px #238fff;
+}
+
+#codePanel h2{
+    margin-top:0;
+}
+
+#codeInput{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:0;
+    margin:10px 0;
+    font-size:17px;
+    text-align:center;
+}
+
+#redeemCode,
+#closeCode{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+}
+
+#redeemCode{
+    background:#168cff;
+    font-weight:bold;
+}
+
+#closeCode{
+    margin-top:10px;
+    background:#555;
+}
+
+/* MENSAJE */
+#message{
+    position:absolute;
+    left:50%;
+    bottom:35px;
+    transform:translateX(-50%);
+    z-index:60;
+    display:none;
+    background:rgba(0,0,0,.85);
+    padding:14px 25px;
+    border-radius:10px;
+    font-size:18px;
+    text-align:center;
+}
+
+/* CREADOR */
+#creatorPanel{
+    position:absolute;
+    right:15px;
+    top:15px;
+    z-index:15;
+    display:none;
+    background:rgba(10,15,25,.85);
+    border:1px solid #4ba8ff;
+    border-radius:10px;
+    padding:12px;
+    font-size:14px;
+}
+
+/* VICTORIA / MUERTE */
+#victoryScreen,
+#deathScreen{
+    position:absolute;
+    inset:0;
+    z-index:70;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:rgba(0,0,0,.88);
+    text-align:center;
+}
+
+#victoryScreen h1{
+    font-size:70px;
+    color:#ffd83d;
+    text-shadow:0 0 25px #ffb000;
+}
+
+#deathScreen h1{
+    font-size:70px;
+    color:#ff3333;
+    text-shadow:0 0 25px #ff0000;
+}
+
+#victoryScreen button,
+#deathScreen button{
+    padding:15px 35px;
+    border:0;
+    border-radius:10px;
+    background:#168cff;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENÚ -->
+
+<div id="menu">
+
+    <h1>THE TOWER OF TIME</h1>
+
+    <p>Sobrevive hasta llegar a la cima</p>
+
+    <div id="stats">
+        🪙 Monedas:
+        <span id="menuCoins">0</span>
+
+        &nbsp;&nbsp;
+
+        🏆 Victorias:
+        <span id="menuWins">0</span>
+    </div>
+
+    <button class="menuBtn" id="playBtn">
+        JUGAR
+    </button>
+
+    <button class="menuBtn" id="shopBtn">
+        ALMACÉN
+    </button>
+
+</div>
+
+
+<!-- ALMACÉN -->
+
+<div id="shop">
+
+    <h2>ALMACÉN</h2>
+
+    <div id="shopItems"></div>
+
+    <button id="closeShop">
+        VOLVER
+    </button>
+
+</div>
+
+
+<!-- HUD -->
+
+<div id="gameUI">
+
+    <div id="timer">
+        Tiempo: 60
+    </div>
+
+    <div id="floorText">
+        Piso: 6 / 6
+    </div>
+
+</div>
+
+
+<!-- CREADOR -->
+
+<div id="creatorPanel">
+
+    <b>MODO CREADOR</b>
+
+    <br><br>
+
+    WASD / Flechas: mover
+
+    <br>
+
+    ESPACIO: subir
+
+    <br>
+
+    CTRL: bajar
+
+    <br>
+
+    M: salir
+
+</div>
+
+
+<!-- CÓDIGOS -->
+
+<div id="codePanel">
+
+    <h2>CANJEAR CÓDIGO</h2>
+
+    <input
+        id="codeInput"
+        placeholder="Escribe el código"
+        autocomplete="off"
+    >
+
+    <button id="redeemCode">
+        CANJEAR
+    </button>
+
+    <button id="closeCode">
+        CERRAR
+    </button>
+
+</div>
+
+
+<!-- MENSAJES -->
+
+<div id="message"></div>
+
+
+<!-- VICTORIA -->
+
+<div id="victoryScreen">
+
+    <h1>¡VICTORIA!</h1>
+
+    <p>
+        Has sobrevivido a The Tower of Time
+    </p>
+
+    <button id="victoryBtn">
+        VOLVER AL MENÚ
+    </button>
+
+</div>
+
+
+<!-- MUERTE -->
+
+<div id="deathScreen">
+
+    <h1>¡HAS MUERTO!</h1>
+
+    <p>
+        Caíste de la torre.
+    </p>
+
+    <button id="deathBtn">
+        VOLVER AL MENÚ
+    </button>
+
+</div>
+
+
+<script type="module">
+
+import * as THREE from
+"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+const FLOOR_COUNT = 6;
+
+const FLOOR_HEIGHT = 7;
+
+const FLOOR_SIZE = 18;
+
+const HEX_RADIUS = 1.25;
+
+const HEX_HEIGHT = .35;
+
+
+/* =========================================================
+   DATOS
+========================================================= */
+
+let coins =
+    Number(localStorage.getItem("towerCoins")) || 0;
+
+let wins =
+    Number(localStorage.getItem("towerWins")) || 0;
+
+let unlockedAnimals =
+    JSON.parse(
+        localStorage.getItem("towerAnimals") ||
+        '["dog"]'
+    );
+
+let selectedAnimal =
+    localStorage.getItem("towerSelected") ||
+    "dog";
+
+let creatorUnlocked =
+    localStorage.getItem("creatorUnlocked") === "true";
+
+let motorcycleUnlocked =
+    localStorage.getItem("motorcycleUnlocked") === "true";
+
+let usedCodes =
+    JSON.parse(
+        localStorage.getItem("usedCodes") || "[]"
+    );
+
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
+let codePaused = false;
+
+let gameRunning = false;
+
+let gameTime = 60;
+
+let currentFloor = 5;
+
+let creatorFly = false;
+
+let isGrounded = true;
+
+
+/* =========================================================
+   ANIMALES
+========================================================= */
+
+const animals = [
+
+    {
+        id:"dog",
+        name:"Perro",
+        price:0,
+        winPrice:0,
+        emoji:"🐶"
+    },
+
+    {
+        id:"cat",
+        name:"Gato",
+        price:500,
+        winPrice:5,
+        emoji:"🐱"
+    },
+
+    {
+        id:"rabbit",
+        name:"Conejo",
+        price:1000,
+        winPrice:10,
+        emoji:"🐰"
+    },
+
+    {
+        id:"panda",
+        name:"Panda",
+        price:2000,
+        winPrice:20,
+        emoji:"🐼"
+    },
+
+    {
+        id:"wolf",
+        name:"Lobo",
+        price:3000,
+        winPrice:30,
+        emoji:"🐺"
+    },
+
+    {
+        id:"fox",
+        name:"Zorro",
+        price:4000,
+        winPrice:40,
+        emoji:"🦊"
+    },
+
+    {
+        id:"frog",
+        name:"Rana",
+        price:5000,
+        winPrice:50,
+        emoji:"🐸"
+    },
+
+    {
+        id:"lion",
+        name:"León",
+        price:6000,
+        winPrice:60,
+        emoji:"🦁"
+    }
+
+];
+
+
+/* =========================================================
+   THREE.JS
+========================================================= */
+
+const scene =
+    new THREE.Scene();
+
+scene.background =
+    new THREE.Color(0x09111e);
+
+scene.fog =
+    new THREE.Fog(
+        0x09111e,
+        40,
+        130
+    );
+
+
+const camera =
+    new THREE.PerspectiveCamera(
+        70,
+        innerWidth / innerHeight,
+        .1,
+        500
+    );
+
+
+const renderer =
+    new THREE.WebGLRenderer({
+        antialias:true
+    });
+
+
+renderer.setSize(
+    innerWidth,
+    innerHeight
+);
+
+renderer.setPixelRatio(
+    Math.min(devicePixelRatio,2)
+);
+
+renderer.shadowMap.enabled = true;
+
+document.body.appendChild(
+    renderer.domElement
+);
+
+
+/* =========================================================
+   LUCES
+========================================================= */
+
+scene.add(
+    new THREE.AmbientLight(
+        0xffffff,
+        1.8
+    )
+);
+
+
+const sun =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2.5
+    );
+
+sun.position.set(
+    20,
+    50,
+    20
+);
+
+sun.castShadow = true;
+
+scene.add(sun);
+
+
+/* =========================================================
+   PISOS
+========================================================= */
+
+const floors = [];
+
+const hexGeometry =
+    new THREE.CylinderGeometry(
+        HEX_RADIUS,
+        HEX_RADIUS,
+        HEX_HEIGHT,
+        6
+    );
+
+
+function createFloor(index){
+
+    const group =
+        new THREE.Group();
+
+    group.position.y =
+        index * FLOOR_HEIGHT;
+
+    scene.add(group);
+
+    const tiles = [];
+
+    const spacingX =
+        HEX_RADIUS * 1.75;
+
+    const spacingZ =
+        HEX_RADIUS * 1.52;
+
+
+    for(let row=-5;row<=5;row++){
+
+        for(let col=-5;col<=5;col++){
+
+            const x =
+                col * spacingX +
+                ((row & 1)
+                    ? spacingX / 2
+                    : 0);
+
+            const z =
+                row * spacingZ;
+
+
+            if(
+                Math.abs(x) > FLOOR_SIZE/2 ||
+                Math.abs(z) > FLOOR_SIZE/2
+            ){
+
+                continue;
+
+            }
+
+
+            const material =
+                new THREE.MeshStandardMaterial({
+
+                    color:
+                        index === 5
+                            ? 0x29a8ff
+                            : 0x2876b5,
+
+                    roughness:.7
+
+                });
+
+
+            const tile =
+                new THREE.Mesh(
+                    hexGeometry,
+                    material
+                );
+
+
+            tile.position.set(
+                x,
+                0,
+                z
+            );
+
+            tile.castShadow = true;
+
+            tile.receiveShadow = true;
+
+            group.add(tile);
+
+
+            tiles.push({
+
+                mesh:tile,
+
+                x:x,
+
+                z:z,
+
+                visible:true,
+
+                disappearing:false,
+
+                disappearTime:0
+
+            });
+
+        }
+
+    }
+
+
+    floors.push({
+
+        group:group,
+
+        tiles:tiles,
+
+        index:index
+
+    });
+
+}
+
+
+for(
+    let i=0;
+    i<FLOOR_COUNT;
+    i++
+){
+
+    createFloor(i);
+
+}
+
+
+/* =========================================================
+   JUGADOR
+========================================================= */
+
+const player =
+    new THREE.Group();
+
+scene.add(player);
+
+
+let playerVelocity =
+    new THREE.Vector3();
+
+
+const bodyMaterial =
+    new THREE.MeshStandardMaterial({
+        color:0x3b82f6
+    });
+
+
+const body =
+    new THREE.Mesh(
+        new THREE.CylinderGeometry(
+            .55,
+            .65,
+            1.2,
+            12
+        ),
+        bodyMaterial
+    );
+
+body.position.y = .95;
+
+body.castShadow = true;
+
+player.add(body);
+
+
+const headMaterial =
+    new THREE.MeshStandardMaterial({
+        color:0xf2c39b
+    });
+
+
+const head =
+    new THREE.Mesh(
+        new THREE.SphereGeometry(
+            .48,
+            16,
+            16
+        ),
+        headMaterial
+    );
+
+head.position.y = 1.8;
+
+head.castShadow = true;
+
+player.add(head);
+
+
+/* OJOS */
+
+const eyeMaterial =
+    new THREE.MeshBasicMaterial({
+        color:0xffffff
+    });
+
+
+for(
+    const x of [-.16,.16]
+){
+
+    const eye =
+        new THREE.Mesh(
+            new THREE.SphereGeometry(
+                .07,
+                8,
+                8
+            ),
+            eyeMaterial
+        );
+
+    eye.position.set(
+        x,
+        1.85,
+        -.42
+    );
+
+    player.add(eye);
+
+}
+
+
+/* PIERNAS */
+
+for(
+    const x of [-.25,.25]
+){
+
+    const leg =
+        new THREE.Mesh(
+            new THREE.CylinderGeometry(
+                .13,
+                .15,
+                .7,
+                8
+            ),
+            bodyMaterial
+        );
+
+    leg.position.set(
+        x,
+        .35,
+        0
+    );
+
+    player.add(leg);
+
+}
+
+
+/* =========================================================
+   APARIENCIA SPIDER-MAN
+========================================================= */
+
+function makeSpiderMan(){
+
+    body.material.color.set(
+        0xc90000
+    );
+
+    head.material.color.set(
+        0xd71920
+    );
+
+
+    for(
+        const child of player.children
+    ){
+
+        if(
+            child !== body &&
+            child !== head &&
+            child.geometry &&
+            child.geometry.type ===
+                "CylinderGeometry"
+        ){
+
+            child.material.color.set(
+                0x101010
+            );
+
+        }
+
+    }
+
+}
+
+
+function updatePlayerAppearance(){
+
+    if(
+        selectedAnimal === "spider"
+    ){
+
+        makeSpiderMan();
+
+        return;
+
+    }
+
+
+    const colors = {
+
+        dog:0x9b673c,
+
+        cat:0xffa6c8,
+
+        rabbit:0xffffff,
+
+        panda:0x111111,
+
+        wolf:0x777777,
+
+        fox:0xd96b25,
+
+        frog:0x3caf4a,
+
+        lion:0xc28a32
+
+    };
+
+
+    body.material.color.set(
+        colors[selectedAnimal] ||
+        0x3b82f6
+    );
+
+    head.material.color.set(
+        colors[selectedAnimal] ||
+        0xf2c39b
+    );
+
+}
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
+
+const keys = {};
+
+
+window.addEventListener(
+    "keydown",
+    e => {
+
+        keys[e.code] = true;
+
+
+        /* K = CÓDIGOS */
+
+        if(
+            e.code === "KeyK" &&
+            gameRunning
+        ){
+
+            toggleCodePanel();
+
+            return;
+
+        }
+
+
+        /* M = CREADOR */
+
+        if(
+            e.code === "KeyM" &&
+            creatorUnlocked &&
+            !codePaused
+        ){
+
+            creatorFly =
+                !creatorFly;
+
+
+            creatorPanel.style.display =
+                creatorFly
+                    ? "block"
+                    : "none";
+
+
+            playerVelocity.set(
+                0,
+                0,
+                0
+            );
+
+        }
+
+
+        if(
+            e.code === "Space"
+        ){
+
+            e.preventDefault();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "keyup",
+    e => {
+
+        keys[e.code] = false;
+
+    }
+);
+
+
+/* =========================================================
+   PANEL DE CÓDIGOS
+========================================================= */
+
+function toggleCodePanel(){
+
+    if(
+        codePanel.style.display ===
+            "none" ||
+        codePanel.style.display === ""
+    ){
+
+        codePaused = true;
+
+        codePanel.style.display =
+            "block";
+
+
+        for(
+            const key in keys
+        ){
+
+            keys[key] = false;
+
+        }
+
+
+        setTimeout(
+            () => codeInput.focus(),
+            50
+        );
+
+    }
+
+    else{
+
+        codePaused = false;
+
+        codePanel.style.display =
+            "none";
+
+        codeInput.blur();
+
+    }
+
+}
+
+
+closeCode.onclick = () => {
+
+    codePaused = false;
+
+    codePanel.style.display =
+        "none";
+
+    codeInput.blur();
+
+};
+
+
+/* =========================================================
+   CÁMARA
+========================================================= */
+
+let cameraYaw = .5;
+
+let cameraPitch = .35;
+
+let dragging = false;
+
+let lastMouseX = 0;
+
+let lastMouseY = 0;
+
+
+renderer.domElement.addEventListener(
+    "mousedown",
+    e => {
+
+        if(codePaused)return;
+
+        dragging = true;
+
+        lastMouseX =
+            e.clientX;
+
+        lastMouseY =
+            e.clientY;
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseup",
+    () => {
+
+        dragging = false;
+
+    }
+);
+
+
+window.addEventListener(
+    "mousemove",
+    e => {
+
+        if(
+            !dragging ||
+            codePaused
+        ){
+
+            return;
+
+        }
+
+
+        const dx =
+            e.clientX -
+            lastMouseX;
+
+        const dy =
+            e.clientY -
+            lastMouseY;
+
+
+        lastMouseX =
+            e.clientX;
+
+        lastMouseY =
+            e.clientY;
+
+
+        cameraYaw -=
+            dx * .006;
+
+
+        cameraPitch =
+            THREE.MathUtils.clamp(
+                cameraPitch -
+                    dy * .004,
+                -.2,
+                1.1
+            );
+
+    }
+);
+
+
+/* =========================================================
+   BUSCAR PLATAFORMA
+========================================================= */
+
+function getTileUnderPlayer(){
+
+    let best = null;
+
+    let bestDistance =
+        Infinity;
+
+
+    for(
+        const floor of floors
+    ){
+
+        const floorY =
+            floor.index *
+            FLOOR_HEIGHT;
+
+
+        const feetY =
+            player.position.y;
+
+
+        if(
+            floorY >
+            feetY + .6
+        ){
+
+            continue;
+
+        }
+
+
+        const verticalDistance =
+            feetY - floorY;
+
+
+        if(
+            verticalDistance > 8
+        ){
+
+            continue;
+
+        }
+
+
+        for(
+            const tile of floor.tiles
+        ){
+
+            if(
+                !tile.visible ||
+                !tile.mesh.visible
+            ){
+
+                continue;
+
+            }
+
+
+            const dx =
+                player.position.x -
+                tile.x;
+
+
+            const dz =
+                player.position.z -
+                tile.z;
+
+
+            const distance =
+                Math.sqrt(
+                    dx*dx +
+                    dz*dz
+                );
+
+
+            if(
+                distance < 1.45 &&
+                verticalDistance <
+                    bestDistance
+            ){
+
+                bestDistance =
+                    verticalDistance;
+
+
+                best = {
+
+                    floor:floor,
+
+                    tile:tile,
+
+                    y:
+                        floorY +
+                        HEX_HEIGHT/2
+
+                };
+
+            }
+
+        }
+
+    }
+
+
+    return best;
+
+}
+
+
+/* =========================================================
+   ACTIVAR PLATAFORMA
+========================================================= */
+
+function triggerTile(tile){
+
+    if(
+        !tile.visible ||
+        tile.disappearing
+    ){
+
+        return;
+
+    }
+
+
+    tile.disappearing = true;
+
+    tile.disappearTime =
+        performance.now();
+
+}
+
+
+/* =========================================================
+   MUERTE
+========================================================= */
+
+function death(){
+
+    if(
+        !gameRunning
+    ){
+
+        return;
+
+    }
+
+
+    gameRunning = false;
+
+    codePaused = false;
+
+    creatorFly = false;
+
+    creatorPanel.style.display =
+        "none";
+
+    codePanel.style.display =
+        "none";
+
+    gameUI.style.display =
+        "none";
+
+
+    playerVelocity.set(
+        0,
+        0,
+        0
+    );
+
+
+    deathScreen.style.display =
+        "flex";
+
+}
+
+
+/* =========================================================
+   JUGADOR
+========================================================= */
+
+function updatePlayer(delta){
+
+    if(codePaused)return;
+
+
+    const direction =
+        new THREE.Vector3();
+
+
+    if(
+        keys["KeyW"] ||
+        keys["ArrowUp"]
+    ){
+
+        direction.z -= 1;
+
+    }
+
+
+    if(
+        keys["KeyS"] ||
+        keys["ArrowDown"]
+    ){
+
+        direction.z += 1;
+
+    }
+
+
+    if(
+        keys["KeyA"] ||
+        keys["ArrowLeft"]
+    ){
+
+        direction.x -= 1;
+
+    }
+
+
+    if(
+        keys["KeyD"] ||
+        keys["ArrowRight"]
+    ){
+
+        direction.x += 1;
+
+    }
+
+
+    if(
+        direction.length() > 0
+    ){
+
+        direction.normalize();
+
+
+        const rotated =
+            direction.clone()
+                .applyAxisAngle(
+                    new THREE.Vector3(
+                        0,
+                        1,
+                        0
+                    ),
+                    cameraYaw
+                );
+
+
+        const speed =
+            creatorFly
+                ? 12
+                : 7;
+
+
+        player.position.x +=
+            rotated.x *
+            speed *
+            delta;
+
+
+        player.position.z +=
+            rotated.z *
+            speed *
+            delta;
+
+    }
+
+
+    /* CREADOR */
+
+    if(creatorFly){
+
+        playerVelocity.y = 0;
+
+
+        if(keys["Space"]){
+
+            player.position.y +=
+                12 * delta;
+
+        }
+
+
+        if(
+            keys["ControlLeft"] ||
+            keys["ControlRight"]
+        ){
+
+            player.position.y -=
+                12 * delta;
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* GRAVEDAD */
+
+    playerVelocity.y -=
+        25 * delta;
+
+
+    player.position.y +=
+        playerVelocity.y *
+        delta;
+
+
+    const ground =
+        getTileUnderPlayer();
+
+
+    if(ground){
+
+        const targetY =
+            ground.y;
+
+
+        if(
+            playerVelocity.y <= 0 &&
+            player.position.y <=
+                targetY + .35
+        ){
+
+            player.position.y =
+                targetY;
+
+
+            playerVelocity.y = 0;
+
+            isGrounded = true;
+
+            currentFloor =
+                ground.floor.index;
+
+
+            triggerTile(
+                ground.tile
+            );
+
+        }
+
+    }
+
+    else{
+
+        isGrounded = false;
+
+    }
+
+
+    /* SALTO */
+
+    if(
+        keys["Space"] &&
+        isGrounded
+    ){
+
+        playerVelocity.y = 10;
+
+        isGrounded = false;
+
+        keys["Space"] = false;
+
+    }
+
+
+    /* LÍMITES */
+
+    const limit =
+        FLOOR_SIZE/2 - 1;
+
+
+    player.position.x =
+        THREE.MathUtils.clamp(
+            player.position.x,
+            -limit,
+            limit
+        );
+
+
+    player.position.z =
+        THREE.MathUtils.clamp(
+            player.position.z,
+            -limit,
+            limit
+        );
+
+
+    /* =========================================
+       AQUÍ ESTÁ LA CORRECCIÓN:
+       SI CAE DEMASIADO, MUERE.
+    ========================================= */
+
+    if(
+        player.position.y < -8
+    ){
+
+        death();
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   PLATAFORMAS
+========================================================= */
+
+function updateTiles(){
+
+    if(codePaused)return;
+
+
+    const now =
+        performance.now();
+
+
+    for(
+        const floor of floors
+    ){
+
+        for(
+            const tile of floor.tiles
+        ){
+
+            if(
+                !tile.disappearing
+            ){
+
+                continue;
+
+            }
+
+
+            const elapsed =
+                now -
+                tile.disappearTime;
+
+
+            /*
+             * ESPERA 1 SEGUNDO
+             */
+
+            if(
+                elapsed < 1000
+            ){
+
+                continue;
+
+            }
+
+
+            /*
+             * DESAPARECE DURANTE 0.3 SEGUNDOS
+             */
+
+            const progress =
+                Math.min(
+                    (elapsed - 1000) /
+                        300,
+                    1
+                );
+
+
+            const scale =
+                1 - progress;
+
+
+            tile.mesh.scale.set(
+                scale,
+                scale,
+                scale
+            );
+
+
+            if(
+                progress >= 1
+            ){
+
+                tile.visible = false;
+
+                tile.mesh.visible = false;
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   CÁMARA
+========================================================= */
+
+function updateCamera(delta){
+
+    const distance = 12;
+
+
+    const horizontal =
+        Math.cos(cameraPitch) *
+        distance;
+
+
+    const height =
+        Math.sin(cameraPitch) *
+        distance;
+
+
+    const x =
+        player.position.x +
+        Math.sin(cameraYaw) *
+        horizontal;
+
+
+    const z =
+        player.position.z +
+        Math.cos(cameraYaw) *
+        horizontal;
+
+
+    const y =
+        player.position.y +
+        4 +
+        height;
+
+
+    const target =
+        new THREE.Vector3(
+            x,
+            y,
+            z
+        );
+
+
+    camera.position.lerp(
+        target,
+        1 -
+        Math.pow(
+            .001,
+            delta
+        )
+    );
+
+
+    camera.lookAt(
+        player.position.x,
+        player.position.y + 1,
+        player.position.z
+    );
+
+}
+
+
+/* =========================================================
+   TIEMPO
+========================================================= */
+
+function randomGameTime(){
+
+    const r =
+        Math.random();
+
+
+    if(r < .50)
+        return 60;
+
+
+    if(r < .75)
+        return 45;
+
+
+    if(r < .95)
+        return 20;
+
+
+    if(r < .995)
+        return 5;
+
+
+    return 0;
+
+}
+
+
+/* =========================================================
+   VICTORIA
+========================================================= */
+
+function victory(){
+
+    if(
+        !gameRunning ||
+        codePaused
+    ){
+
+        return;
+
+    }
+
+
+    gameRunning = false;
+
+    wins += 1;
+
+    coins += 100;
+
+
+    saveData();
+
+
+    gameUI.style.display =
+        "none";
+
+
+    victoryScreen.style.display =
+        "flex";
+
+}
+
+
+/* =========================================================
+   REINICIAR PLATAFORMAS
+========================================================= */
+
+function resetTiles(){
+
+    for(
+        const floor of floors
+    ){
+
+        for(
+            const tile of floor.tiles
+        ){
+
+            tile.visible = true;
+
+            tile.disappearing = false;
+
+            tile.disappearTime = 0;
+
+            tile.mesh.visible = true;
+
+            tile.mesh.scale.set(
+                1,
+                1,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   INICIAR PARTIDA
+========================================================= */
+
+function startGame(){
+
+    menu.style.display =
+        "none";
+
+    shop.style.display =
+        "none";
+
+    victoryScreen.style.display =
+        "none";
+
+    deathScreen.style.display =
+        "none";
+
+    gameUI.style.display =
+        "block";
+
+
+    resetTiles();
+
+
+    selectedAnimal =
+        localStorage.getItem(
+            "towerSelected"
+        ) || "dog";
+
+
+    updatePlayerAppearance();
+
+
+    player.position.set(
+        0,
+        FLOOR_HEIGHT * 5 +
+            HEX_HEIGHT/2,
+        0
+    );
+
+
+    playerVelocity.set(
+        0,
+        0,
+        0
+    );
+
+
+    isGrounded = true;
+
+    currentFloor = 5;
+
+    creatorFly = false;
+
+    creatorPanel.style.display =
+        "none";
+
+    codePaused = false;
+
+    codePanel.style.display =
+        "none";
+
+
+    gameTime =
+        randomGameTime();
+
+
+    gameRunning = true;
+
+
+    /* TIEMPO ESPECIAL */
+
+    if(
+        gameTime === 0
+    ){
+
+        coins += 500;
+
+        saveData();
+
+
+        setTimeout(
+            () => {
+
+                if(gameRunning){
+
+                    victory();
+
+                }
+
+            },
+            500
+        );
+
+    }
+
+
+    updateUI();
+
+}
+
+
+/* =========================================================
+   INTERFAZ
+========================================================= */
+
+function updateUI(){
+
+    menuCoins.textContent =
+        coins;
+
+    menuWins.textContent =
+        wins;
+
+
+    timer.textContent =
+        gameTime === 0
+            ? "Tiempo: ESPECIAL"
+            : "Tiempo: " +
+              Math.ceil(gameTime);
+
+
+    floorText.textContent =
+        "Piso: " +
+        (currentFloor + 1) +
+        " / " +
+        FLOOR_COUNT;
+
+}
+
+
+/* =========================================================
+   GUARDAR
+========================================================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        "towerCoins",
+        coins
+    );
+
+
+    localStorage.setItem(
+        "towerWins",
+        wins
+    );
+
+
+    localStorage.setItem(
+        "towerAnimals",
+        JSON.stringify(
+            unlockedAnimals
+        )
+    );
+
+
+    localStorage.setItem(
+        "towerSelected",
+        selectedAnimal
+    );
+
+
+    localStorage.setItem(
+        "creatorUnlocked",
+        creatorUnlocked
+    );
+
+
+    localStorage.setItem(
+        "motorcycleUnlocked",
+        motorcycleUnlocked
+    );
+
+
+    localStorage.setItem(
+        "usedCodes",
+        JSON.stringify(
+            usedCodes
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ALMACÉN
+========================================================= */
+
+function renderShop(){
+
+    shopItems.innerHTML = "";
+
+
+    for(
+        const animal of animals
+    ){
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "shopItem";
+
+
+        const unlocked =
+            unlockedAnimals.includes(
+                animal.id
+            );
+
+
+        div.innerHTML = `
+
+            <div style="font-size:55px">
+                ${animal.emoji}
+            </div>
+
+            <h3>
+                ${animal.name}
+            </h3>
+
+            <p>
+                🪙 ${animal.price}
+                <br>
+                🏆 ${animal.winPrice}
+            </p>
+
+            <button>
+                ${
+                    unlocked
+                        ? (
+                            selectedAnimal ===
+                            animal.id
+                                ? "SELECCIONADO"
+                                : "USAR"
+                          )
+                        : "COMPRAR"
+                }
+            </button>
+
+        `;
+
+
+        const button =
+            div.querySelector(
+                "button"
+            );
+
+
+        if(unlocked){
+
+            button.onclick = () => {
+
+                selectedAnimal =
+                    animal.id;
+
+                saveData();
+
+                updatePlayerAppearance();
+
+                renderShop();
+
+            };
+
+        }
+
+        else{
+
+            button.onclick = () => {
+
+                if(
+                    coins >=
+                        animal.price &&
+                    wins >=
+                        animal.winPrice
+                ){
+
+                    coins -=
+                        animal.price;
+
+                    wins -=
+                        animal.winPrice;
+
+                    unlockedAnimals.push(
+                        animal.id
+                    );
+
+                    selectedAnimal =
+                        animal.id;
+
+                    saveData();
+
+                    updateUI();
+
+                    renderShop();
+
+                    showMessage(
+                        animal.name +
+                        " desbloqueado!"
+                    );
+
+                }
+
+                else{
+
+                    showMessage(
+                        "No tienes suficientes monedas o victorias."
+                    );
+
+                }
+
+            };
+
+        }
+
+
+        shopItems.appendChild(
+            div
+        );
+
+    }
+
+
+    /* SPIDER-MAN */
+
+    if(
+        unlockedAnimals.includes(
+            "spider"
+        )
+    ){
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "shopItem";
+
+
+        div.innerHTML = `
+
+            <div style="font-size:55px">
+                🕷️
+            </div>
+
+            <h3>
+                SPIDER-MAN
+            </h3>
+
+            <p>
+                🪙 6767
+                <br>
+                🏆 67
+                <br>
+                DESBLOQUEADO
+            </p>
+
+            <button>
+                ${
+                    selectedAnimal ===
+                    "spider"
+                        ? "SELECCIONADO"
+                        : "USAR"
+                }
+            </button>
+
+        `;
+
+
+        div.querySelector(
+            "button"
+        ).onclick = () => {
+
+            selectedAnimal =
+                "spider";
+
+            saveData();
+
+            updatePlayerAppearance();
+
+            renderShop();
+
+        };
+
+
+        shopItems.appendChild(
+            div
+        );
+
+    }
+
+
+    /* MOTOCICLETA */
+
+    if(
+        motorcycleUnlocked
+    ){
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "shopItem";
+
+
+        div.innerHTML = `
+
+            <div style="font-size:55px">
+                🏍️
+            </div>
+
+            <h3>
+                MOTOCICLETA
+            </h3>
+
+            <p>
+                RECOMPENSA ESPECIAL
+            </p>
+
+            <button>
+                USAR
+            </button>
+
+        `;
+
+
+        div.querySelector(
+            "button"
+        ).onclick = () => {
+
+            showMessage(
+                "Motocicleta seleccionada."
+            );
+
+        };
+
+
+        shopItems.appendChild(
+            div
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MENSAJES
+========================================================= */
+
+let messageTimeout;
+
+
+function showMessage(text){
+
+    message.textContent =
+        text;
+
+    message.style.display =
+        "block";
+
+    clearTimeout(
+        messageTimeout
+    );
+
+
+    messageTimeout =
+        setTimeout(
+            () => {
+
+                message.style.display =
+                    "none";
+
+            },
+            3000
+        );
+
+}
+
+
+/* =========================================================
+   CÓDIGOS
+========================================================= */
+
+redeemCode.onclick = () => {
+
+    const code =
+        codeInput.value.trim();
+
+
+    /* SPIDER */
+
+    if(
+        code === "spider"
+    ){
+
+        if(
+            !unlockedAnimals.includes(
+                "spider"
+            )
+        ){
+
+            unlockedAnimals.push(
+                "spider"
+            );
+
+            saveData();
+
+            renderShop();
+
+
+            showMessage(
+                "¡Spider-Man desbloqueado! Ya aparece en ALMACÉN."
+            );
+
+        }
+
+        else{
+
+            showMessage(
+                "Spider-Man ya está desbloqueado."
+            );
+
+        }
+
+
+        codeInput.value = "";
+
+        return;
+
+    }
+
+
+    /* TOWER */
+
+    if(
+        code === "TOWER"
+    ){
+
+        if(
+            usedCodes.includes(
+                "TOWER"
+            )
+        ){
+
+            showMessage(
+                "Ese código ya fue utilizado."
+            );
+
+            return;
+
+        }
+
+
+        usedCodes.push(
+            "TOWER"
+        );
+
+
+        wins += 100;
+
+        coins += 100000;
+
+        motorcycleUnlocked = true;
+
+
+        saveData();
+
+        renderShop();
+
+        updateUI();
+
+
+        showMessage(
+            "¡TOWER activado! +100 victorias, +100000 monedas y motocicleta desbloqueada."
+        );
+
+
+        codeInput.value = "";
+
+        return;
+
+    }
+
+
+    /* CREATOR */
+
+    if(
+        code === "CREATOR"
+    ){
+
+        if(
+            creatorUnlocked
+        ){
+
+            showMessage(
+                "El modo creador ya está desbloqueado. Pulsa M."
+            );
+
+        }
+
+        else{
+
+            creatorUnlocked = true;
+
+            saveData();
+
+
+            showMessage(
+                "Modo Creador desbloqueado. Ahora puedes usar M."
+            );
+
+        }
+
+
+        codeInput.value = "";
+
+        return;
+
+    }
+
+
+    showMessage(
+        "Código incorrecto."
+    );
+
+};
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+playBtn.onclick = () => {
+
+    startGame();
+
+};
+
+
+shopBtn.onclick = () => {
+
+    menu.style.display =
+        "none";
+
+    shop.style.display =
+        "block";
+
+    renderShop();
+
+};
+
+
+closeShop.onclick = () => {
+
+    shop.style.display =
+        "none";
+
+    menu.style.display =
+        "flex";
+
+    updateUI();
+
+};
+
+
+victoryBtn.onclick = () => {
+
+    victoryScreen.style.display =
+        "none";
+
+    gameUI.style.display =
+        "none";
+
+    menu.style.display =
+        "flex";
+
+    updateUI();
+
+};
+
+
+/* BOTÓN DE MUERTE */
+
+deathBtn.onclick = () => {
+
+    deathScreen.style.display =
+        "none";
+
+    gameUI.style.display =
+        "none";
+
+    menu.style.display =
+        "flex";
+
+    updateUI();
+
+};
+
+
+/* =========================================================
+   BUCLE PRINCIPAL
+========================================================= */
+
+let lastTime =
+    performance.now();
+
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    const now =
+        performance.now();
+
+
+    const delta =
+        Math.min(
+            (now - lastTime) /
+                1000,
+            .05
+        );
+
+
+    lastTime = now;
+
+
+    if(
+        gameRunning &&
+        !codePaused
+    ){
+
+        /* TIEMPO */
+
+        if(
+            gameTime > 0
+        ){
+
+            gameTime -=
+                delta;
+
+
+            if(
+                gameTime <= 0
+            ){
+
+                gameTime = 0;
+
+                victory();
+
+            }
+
+        }
+
+
+        updatePlayer(
+            delta
+        );
+
+
+        /*
+         * Solo seguimos actualizando
+         * si el jugador no murió.
+         */
+
+        if(gameRunning){
+
+            updateTiles();
+
+
+            /*
+             * LLEGAR A LA CIMA
+             */
+
+            if(
+                currentFloor >=
+                    FLOOR_COUNT - 1 &&
+                player.position.y >
+                    FLOOR_HEIGHT * 5 + 2
+            ){
+
+                victory();
+
+            }
+
+
+            updateUI();
+
+        }
+
+    }
+
+
+    updateCamera(
+        codePaused
+            ? 0
+            : delta
+    );
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        camera.aspect =
+            innerWidth /
+            innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            innerWidth,
+            innerHeight
+        );
+
+    }
+);
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+updatePlayerAppearance();
+
+updateUI();
+
+</script>
+
+</body>
+</html>
