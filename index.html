@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,37 +30,22 @@ canvas{
     display:block;
 }
 
-/* =========================
-   MENÚ
-========================= */
-
 #menu{
     position:absolute;
     inset:0;
     z-index:20;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
-    background:
-        radial-gradient(
-            circle,
-            #29476b 0%,
-            #111c2c 45%,
-            #03050a 100%
-        );
-
+    background:radial-gradient(circle,#29476b 0%,#111c2c 45%,#03050a 100%);
     text-align:center;
 }
 
 #menu h1{
     font-size:60px;
     margin:0 0 10px;
-
-    text-shadow:
-        0 0 20px #00c8ff;
+    text-shadow:0 0 20px #00c8ff;
 }
 
 #menu p{
@@ -75,42 +61,24 @@ canvas{
     width:250px;
     padding:16px;
     margin:8px;
-
     border:0;
     border-radius:12px;
-
     font-size:22px;
     font-weight:bold;
-
     cursor:pointer;
-
     background:#168cff;
     color:white;
-
-    box-shadow:
-        0 0 15px #168cff;
+    box-shadow:0 0 15px #168cff;
 }
-
-
-/* =========================
-   ALMACÉN
-========================= */
 
 #shop{
     position:absolute;
     inset:0;
-
     z-index:30;
-
     display:none;
-
-    background:
-        rgba(3,8,16,.97);
-
+    background:rgba(3,8,16,.97);
     overflow:auto;
-
     padding:30px;
-
     touch-action:auto;
 }
 
@@ -121,137 +89,77 @@ canvas{
 
 #shopItems{
     display:grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(190px,1fr)
-        );
-
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
     gap:18px;
-
     max-width:1000px;
-
     margin:30px auto;
 }
 
 .shopItem{
     background:#111d2e;
-
     border:2px solid #2b6ea8;
-
     border-radius:15px;
-
     padding:18px;
-
     text-align:center;
 }
 
 .shopItem button{
     border:0;
-
     border-radius:8px;
-
     padding:10px 15px;
-
     background:#1597ff;
-
     color:white;
-
     cursor:pointer;
-
     font-weight:bold;
 }
 
 #closeShop{
     display:block;
-
     margin:20px auto;
-
     padding:13px 30px;
-
     border:0;
-
     border-radius:10px;
-
     background:#d33;
-
     color:white;
-
     font-size:18px;
-
     cursor:pointer;
 }
 
-
-/* =========================
-   HUD
-========================= */
-
 #gameUI{
     position:absolute;
-
     top:15px;
     left:15px;
-
     z-index:10;
-
     display:none;
-
     pointer-events:none;
 }
 
 #timer{
     font-size:28px;
-
     font-weight:bold;
-
-    text-shadow:
-        0 0 8px black;
+    text-shadow:0 0 8px black;
 }
 
 #floorText{
     font-size:18px;
-
     margin-top:5px;
-
-    text-shadow:
-        0 0 8px black;
+    text-shadow:0 0 8px black;
 }
-
-
-/* =========================
-   CÓDIGOS
-========================= */
 
 #codePanel{
     position:absolute;
-
     left:50%;
     top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
+    transform:translate(-50%,-50%);
     z-index:50;
-
     display:none;
-
     width:330px;
-
     background:#101a29;
-
     border:2px solid #238fff;
-
     border-radius:15px;
-
     padding:25px;
-
     text-align:center;
-
-    box-shadow:
-        0 0 30px #238fff;
-
+    box-shadow:0 0 30px #238fff;
     touch-action:auto;
 }
 
@@ -261,334 +169,180 @@ canvas{
 
 #codeInput{
     width:100%;
-
     padding:12px;
-
     border-radius:8px;
-
     border:0;
-
     margin:10px 0;
-
     font-size:17px;
-
     text-align:center;
 }
 
 #redeemCode,
 #closeCode{
     width:100%;
-
     padding:12px;
-
     border:0;
-
     border-radius:8px;
-
     color:white;
-
     cursor:pointer;
 }
 
 #redeemCode{
     background:#168cff;
-
     font-weight:bold;
 }
 
 #closeCode{
     margin-top:10px;
-
     background:#555;
 }
 
-
-/* =========================
-   MENSAJE
-========================= */
-
 #message{
     position:absolute;
-
     left:50%;
     bottom:35px;
-
-    transform:
-        translateX(-50%);
-
+    transform:translateX(-50%);
     z-index:60;
-
     display:none;
-
-    background:
-        rgba(0,0,0,.85);
-
+    background:rgba(0,0,0,.85);
     padding:14px 25px;
-
     border-radius:10px;
-
     font-size:18px;
-
     text-align:center;
-
     max-width:90%;
 }
 
-
-/* =========================
-   CREADOR
-========================= */
-
 #creatorPanel{
     position:absolute;
-
     right:15px;
     top:15px;
-
     z-index:15;
-
     display:none;
-
-    background:
-        rgba(10,15,25,.85);
-
+    background:rgba(10,15,25,.85);
     border:1px solid #4ba8ff;
-
     border-radius:10px;
-
     padding:12px;
-
     font-size:14px;
 }
-
-
-/* =========================
-   VICTORIA / MUERTE
-========================= */
 
 #victoryScreen,
 #deathScreen{
     position:absolute;
-
     inset:0;
-
     z-index:70;
-
     display:none;
-
     align-items:center;
     justify-content:center;
-
     flex-direction:column;
-
-    background:
-        rgba(0,0,0,.88);
-
+    background:rgba(0,0,0,.88);
     text-align:center;
-
     touch-action:auto;
 }
 
 #victoryScreen h1{
     font-size:70px;
-
     color:#ffd83d;
-
-    text-shadow:
-        0 0 25px #ffb000;
+    text-shadow:0 0 25px #ffb000;
 }
 
 #deathScreen h1{
     font-size:70px;
-
     color:#ff3333;
-
-    text-shadow:
-        0 0 25px #ff0000;
+    text-shadow:0 0 25px #ff0000;
 }
 
 #victoryScreen button,
 #deathScreen button{
     padding:15px 35px;
-
     border:0;
-
     border-radius:10px;
-
     background:#168cff;
-
     color:white;
-
     font-size:20px;
-
     cursor:pointer;
 }
 
-
-/* =========================================================
-   CONTROLES CELULAR
-========================================================= */
-
 #mobileControls{
     position:absolute;
-
     inset:0;
-
     z-index:40;
-
     display:none;
-
     pointer-events:none;
 }
 
-
-/* JOYSTICK */
-
 #joystickArea{
     position:absolute;
-
     left:20px;
     bottom:25px;
-
     width:145px;
     height:145px;
-
     border-radius:50%;
-
-    background:
-        rgba(255,255,255,.12);
-
-    border:
-        2px solid
-        rgba(255,255,255,.25);
-
+    background:rgba(255,255,255,.12);
+    border:2px solid rgba(255,255,255,.25);
     pointer-events:auto;
 }
 
 #joystickStick{
     position:absolute;
-
     left:50%;
     top:50%;
-
     width:62px;
     height:62px;
-
     margin-left:-31px;
     margin-top:-31px;
-
     border-radius:50%;
-
-    background:
-        rgba(255,255,255,.45);
-
-    border:
-        2px solid
-        rgba(255,255,255,.7);
-
-    box-shadow:
-        0 0 15px
-        rgba(255,255,255,.25);
+    background:rgba(255,255,255,.45);
+    border:2px solid rgba(255,255,255,.7);
+    box-shadow:0 0 15px rgba(255,255,255,.25);
 }
-
-
-/* BOTÓN SALTO */
 
 #jumpButton{
     position:absolute;
-
     right:25px;
     bottom:35px;
-
     width:85px;
     height:85px;
-
     border-radius:50%;
-
-    border:
-        2px solid
-        rgba(255,255,255,.6);
-
-    background:
-        rgba(30,145,255,.65);
-
+    border:2px solid rgba(255,255,255,.6);
+    background:rgba(30,145,255,.65);
     color:white;
-
     font-size:17px;
     font-weight:bold;
-
     pointer-events:auto;
-
-    box-shadow:
-        0 0 20px
-        rgba(30,145,255,.5);
+    box-shadow:0 0 20px rgba(30,145,255,.5);
 }
-
-
-/* BOTÓN CÓDIGO */
 
 #mobileCodeButton{
     position:absolute;
-
     right:20px;
     top:20px;
-
     width:55px;
     height:55px;
-
     border-radius:50%;
-
-    border:
-        2px solid
-        rgba(255,255,255,.5);
-
-    background:
-        rgba(15,100,180,.8);
-
+    border:2px solid rgba(255,255,255,.5);
+    background:rgba(15,100,180,.8);
     color:white;
-
     font-weight:bold;
-
     pointer-events:auto;
 }
 
-
-/* MENSAJE DE CÁMARA */
-
 #cameraHint{
     position:absolute;
-
     bottom:180px;
-
     left:50%;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        rgba(0,0,0,.45);
-
+    transform:translateX(-50%);
+    background:rgba(0,0,0,.45);
     border-radius:10px;
-
     padding:8px 12px;
-
     font-size:12px;
-
     opacity:.7;
-
     pointer-events:none;
 }
-
-
-/* =========================
-   CELULAR
-========================= */
 
 @media(max-width:800px){
 
     #menu h1{
         font-size:38px;
-
         max-width:90%;
     }
 
@@ -598,9 +352,7 @@ canvas{
 
     .menuBtn{
         width:220px;
-
         padding:14px;
-
         font-size:19px;
     }
 
@@ -624,18 +376,13 @@ canvas{
     #deathScreen h1{
         font-size:48px;
     }
-
 }
-
-
-/* CELULAR HORIZONTAL */
 
 @media(max-height:500px){
 
     #joystickArea{
         width:115px;
         height:115px;
-
         bottom:15px;
         left:15px;
     }
@@ -643,7 +390,6 @@ canvas{
     #joystickStick{
         width:50px;
         height:50px;
-
         margin-left:-25px;
         margin-top:-25px;
     }
@@ -651,34 +397,22 @@ canvas{
     #jumpButton{
         width:70px;
         height:70px;
-
         bottom:20px;
         right:20px;
     }
-
 }
 </style>
 </head>
 
 <body>
 
-
-<!-- =====================================================
-     MENÚ
-===================================================== -->
-
 <div id="menu">
 
-    <h1>
-        THE TOWER OF TIME
-    </h1>
+    <h1>THE TOWER OF TIME</h1>
 
-    <p>
-        Sobrevive hasta llegar a la cima
-    </p>
+    <p>Sobrevive hasta llegar a la cima</p>
 
     <div id="stats">
-
         🪙 Monedas:
         <span id="menuCoins">0</span>
 
@@ -686,37 +420,21 @@ canvas{
 
         🏆 Victorias:
         <span id="menuWins">0</span>
-
     </div>
 
-    <button
-        class="menuBtn"
-        id="playBtn">
-
+    <button class="menuBtn" id="playBtn">
         JUGAR
-
     </button>
 
-    <button
-        class="menuBtn"
-        id="shopBtn">
-
+    <button class="menuBtn" id="shopBtn">
         ALMACÉN
-
     </button>
 
 </div>
 
-
-<!-- =====================================================
-     ALMACÉN
-===================================================== -->
-
 <div id="shop">
 
-    <h2>
-        ALMACÉN
-    </h2>
+    <h2>ALMACÉN</h2>
 
     <div id="shopItems"></div>
 
@@ -725,11 +443,6 @@ canvas{
     </button>
 
 </div>
-
-
-<!-- =====================================================
-     HUD
-===================================================== -->
 
 <div id="gameUI">
 
@@ -742,11 +455,6 @@ canvas{
     </div>
 
 </div>
-
-
-<!-- =====================================================
-     CREADOR
-===================================================== -->
 
 <div id="creatorPanel">
 
@@ -770,16 +478,9 @@ canvas{
 
 </div>
 
-
-<!-- =====================================================
-     CÓDIGOS
-===================================================== -->
-
 <div id="codePanel">
 
-    <h2>
-        CANJEAR CÓDIGO
-    </h2>
+    <h2>CANJEAR CÓDIGO</h2>
 
     <input
         id="codeInput"
@@ -797,27 +498,13 @@ canvas{
 
 </div>
 
-
-<!-- =====================================================
-     MENSAJE
-===================================================== -->
-
 <div id="message"></div>
-
-
-<!-- =====================================================
-     VICTORIA
-===================================================== -->
 
 <div id="victoryScreen">
 
-    <h1>
-        ¡VICTORIA!
-    </h1>
+    <h1>¡VICTORIA!</h1>
 
-    <p>
-        Has sobrevivido a The Tower of Time
-    </p>
+    <p>Has sobrevivido a The Tower of Time</p>
 
     <button id="victoryBtn">
         VOLVER AL MENÚ
@@ -825,20 +512,11 @@ canvas{
 
 </div>
 
-
-<!-- =====================================================
-     MUERTE
-===================================================== -->
-
 <div id="deathScreen">
 
-    <h1>
-        ¡HAS MUERTO!
-    </h1>
+    <h1>¡HAS MUERTO!</h1>
 
-    <p>
-        Caíste de la torre.
-    </p>
+    <p>Caíste de la torre.</p>
 
     <button id="deathBtn">
         VOLVER AL MENÚ
@@ -846,29 +524,19 @@ canvas{
 
 </div>
 
-
-<!-- =====================================================
-     CONTROLES MÓVILES
-===================================================== -->
-
 <div id="mobileControls">
 
     <div id="joystickArea">
-
         <div id="joystickStick"></div>
-
     </div>
-
 
     <button id="jumpButton">
         SALTAR
     </button>
 
-
     <button id="mobileCodeButton">
         K
     </button>
-
 
     <div id="cameraHint">
         Arrastra la pantalla para mover la cámara
@@ -876,11 +544,93 @@ canvas{
 
 </div>
 
-
 <script type="module">
 
 import * as THREE from
 "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+
+
+/* =====================================================
+   REFERENCIAS HTML CORREGIDAS
+===================================================== */
+
+const menu =
+    document.getElementById("menu");
+
+const menuCoins =
+    document.getElementById("menuCoins");
+
+const menuWins =
+    document.getElementById("menuWins");
+
+const playBtn =
+    document.getElementById("playBtn");
+
+const shopBtn =
+    document.getElementById("shopBtn");
+
+const shop =
+    document.getElementById("shop");
+
+const shopItems =
+    document.getElementById("shopItems");
+
+const closeShop =
+    document.getElementById("closeShop");
+
+const gameUI =
+    document.getElementById("gameUI");
+
+const timer =
+    document.getElementById("timer");
+
+const floorText =
+    document.getElementById("floorText");
+
+const creatorPanel =
+    document.getElementById("creatorPanel");
+
+const codePanel =
+    document.getElementById("codePanel");
+
+const codeInput =
+    document.getElementById("codeInput");
+
+const redeemCode =
+    document.getElementById("redeemCode");
+
+const closeCode =
+    document.getElementById("closeCode");
+
+const message =
+    document.getElementById("message");
+
+const victoryScreen =
+    document.getElementById("victoryScreen");
+
+const victoryBtn =
+    document.getElementById("victoryBtn");
+
+const deathScreen =
+    document.getElementById("deathScreen");
+
+const deathBtn =
+    document.getElementById("deathBtn");
+
+const mobileControls =
+    document.getElementById("mobileControls");
+
+const joystickArea =
+    document.getElementById("joystickArea");
+
+const joystickStick =
+    document.getElementById("joystickStick");
+
+const jumpButton =
+    document.getElementById("jumpButton");
+
+const mobileCodeButton =
+    document.getElementById("mobileCodeButton");
 
 
 /* =====================================================
@@ -909,14 +659,12 @@ let coins =
         )
     ) || 0;
 
-
 let wins =
     Number(
         localStorage.getItem(
             "towerWins"
         )
     ) || 0;
-
 
 let unlockedAnimals =
     JSON.parse(
@@ -926,25 +674,21 @@ let unlockedAnimals =
         '["dog"]'
     );
 
-
 let selectedAnimal =
     localStorage.getItem(
         "towerSelected"
     ) ||
     "dog";
 
-
 let creatorUnlocked =
     localStorage.getItem(
         "creatorUnlocked"
     ) === "true";
 
-
 let motorcycleUnlocked =
     localStorage.getItem(
         "motorcycleUnlocked"
     ) === "true";
-
 
 let usedCodes =
     JSON.parse(
@@ -979,7 +723,6 @@ let isGrounded = true;
 const isMobile =
     /Android|iPhone|iPad|iPod|Mobile/i
         .test(navigator.userAgent);
-
 
 let mobileMoveX = 0;
 
@@ -1076,12 +819,10 @@ const animals = [
 const scene =
     new THREE.Scene();
 
-
 scene.background =
     new THREE.Color(
         0x09111e
     );
-
 
 scene.fog =
     new THREE.Fog(
@@ -1090,28 +831,23 @@ scene.fog =
         130
     );
 
-
 const camera =
     new THREE.PerspectiveCamera(
         70,
-        innerWidth /
-        innerHeight,
+        innerWidth / innerHeight,
         .1,
         500
     );
-
 
 const renderer =
     new THREE.WebGLRenderer({
         antialias:true
     });
 
-
 renderer.setSize(
     innerWidth,
     innerHeight
 );
-
 
 renderer.setPixelRatio(
     Math.min(
@@ -1120,10 +856,8 @@ renderer.setPixelRatio(
     )
 );
 
-
 renderer.shadowMap.enabled =
     true;
-
 
 document.body.appendChild(
     renderer.domElement
@@ -1141,13 +875,11 @@ scene.add(
     )
 );
 
-
 const sun =
     new THREE.DirectionalLight(
         0xffffff,
         2.5
     );
-
 
 sun.position.set(
     20,
@@ -1155,10 +887,8 @@ sun.position.set(
     20
 );
 
-
 sun.castShadow =
     true;
-
 
 scene.add(sun);
 
@@ -1169,7 +899,6 @@ scene.add(sun);
 
 const floors = [];
 
-
 const hexGeometry =
     new THREE.CylinderGeometry(
         HEX_RADIUS,
@@ -1178,33 +907,26 @@ const hexGeometry =
         6
     );
 
-
 function createFloor(index){
 
     const group =
         new THREE.Group();
 
-
     group.position.y =
         index *
         FLOOR_HEIGHT;
 
-
     scene.add(group);
 
-
     const tiles = [];
-
 
     const spacingX =
         HEX_RADIUS *
         1.75;
 
-
     const spacingZ =
         HEX_RADIUS *
         1.52;
-
 
     for(
         let row=-5;
@@ -1227,11 +949,9 @@ function createFloor(index){
                     : 0
                 );
 
-
             const z =
                 row *
                 spacingZ;
-
 
             if(
                 Math.abs(x) >
@@ -1239,24 +959,17 @@ function createFloor(index){
                 Math.abs(z) >
                     FLOOR_SIZE/2
             ){
-
                 continue;
-
             }
-
 
             const material =
                 new THREE.MeshStandardMaterial({
-
                     color:
                         index === 5
                         ? 0x29a8ff
                         : 0x2876b5,
-
                     roughness:.7
-
                 });
-
 
             const tile =
                 new THREE.Mesh(
@@ -1264,67 +977,47 @@ function createFloor(index){
                     material
                 );
 
-
             tile.position.set(
                 x,
                 0,
                 z
             );
 
-
             tile.castShadow =
                 true;
-
 
             tile.receiveShadow =
                 true;
 
-
             group.add(tile);
 
-
             tiles.push({
-
                 mesh:tile,
-
                 x:x,
-
                 z:z,
-
                 visible:true,
-
                 disappearing:false,
-
                 disappearTime:0
-
             });
 
         }
 
     }
 
-
     floors.push({
-
         group:group,
-
         tiles:tiles,
-
         index:index
-
     });
 
 }
-
 
 for(
     let i=0;
     i<FLOOR_COUNT;
     i++
 ){
-
     createFloor(i);
-
 }
 
 
@@ -1335,90 +1028,62 @@ for(
 const player =
     new THREE.Group();
 
-
 scene.add(player);
-
 
 let playerVelocity =
     new THREE.Vector3();
 
-
 const bodyMaterial =
     new THREE.MeshStandardMaterial({
-
         color:0x3b82f6
-
     });
-
 
 const body =
     new THREE.Mesh(
-
         new THREE.CylinderGeometry(
             .55,
             .65,
             1.2,
             12
         ),
-
         bodyMaterial
-
     );
-
 
 body.position.y =
     .95;
 
-
 body.castShadow =
     true;
 
-
 player.add(body);
-
 
 const headMaterial =
     new THREE.MeshStandardMaterial({
-
         color:0xf2c39b
-
     });
-
 
 const head =
     new THREE.Mesh(
-
         new THREE.SphereGeometry(
             .48,
             16,
             16
         ),
-
         headMaterial
-
     );
-
 
 head.position.y =
     1.8;
 
-
 head.castShadow =
     true;
 
-
 player.add(head);
-
-
-/* OJOS */
 
 const eyeMaterial =
     new THREE.MeshBasicMaterial({
-
         color:0xffffff
-
     });
-
 
 for(
     const x of [-.16,.16]
@@ -1426,17 +1091,13 @@ for(
 
     const eye =
         new THREE.Mesh(
-
             new THREE.SphereGeometry(
                 .07,
                 8,
                 8
             ),
-
             eyeMaterial
-
         );
-
 
     eye.position.set(
         x,
@@ -1444,13 +1105,8 @@ for(
         -.42
     );
 
-
     player.add(eye);
-
 }
-
-
-/* PIERNAS */
 
 for(
     const x of [-.25,.25]
@@ -1458,18 +1114,14 @@ for(
 
     const leg =
         new THREE.Mesh(
-
             new THREE.CylinderGeometry(
                 .13,
                 .15,
                 .7,
                 8
             ),
-
             bodyMaterial
-
         );
-
 
     leg.position.set(
         x,
@@ -1477,9 +1129,7 @@ for(
         0
     );
 
-
     player.add(leg);
-
 }
 
 
@@ -1493,11 +1143,9 @@ function makeSpiderMan(){
         0xc90000
     );
 
-
     head.material.color.set(
         0xd71920
     );
-
 
     for(
         const child of player.children
@@ -1521,7 +1169,6 @@ function makeSpiderMan(){
 
 }
 
-
 function updatePlayerAppearance(){
 
     if(
@@ -1532,9 +1179,7 @@ function updatePlayerAppearance(){
         makeSpiderMan();
 
         return;
-
     }
-
 
     const colors = {
 
@@ -1556,16 +1201,13 @@ function updatePlayerAppearance(){
 
     };
 
-
     const color =
         colors[selectedAnimal] ||
         0x3b82f6;
 
-
     body.material.color.set(
         color
     );
-
 
     head.material.color.set(
         color
@@ -1580,13 +1222,11 @@ function updatePlayerAppearance(){
 
 const keys = {};
 
-
 window.addEventListener(
     "keydown",
     e => {
 
         keys[e.code] = true;
-
 
         if(
             e.code === "KeyK" &&
@@ -1596,9 +1236,7 @@ window.addEventListener(
             toggleCodePanel();
 
             return;
-
         }
-
 
         if(
             e.code === "KeyM" &&
@@ -1609,40 +1247,31 @@ window.addEventListener(
             creatorFly =
                 !creatorFly;
 
-
             creatorPanel.style.display =
                 creatorFly
                 ? "block"
                 : "none";
-
 
             playerVelocity.set(
                 0,
                 0,
                 0
             );
-
         }
-
 
         if(
             e.code === "Space"
         ){
-
             e.preventDefault();
-
         }
 
     }
 );
 
-
 window.addEventListener(
     "keyup",
     e => {
-
         keys[e.code] = false;
-
     }
 );
 
@@ -1662,25 +1291,18 @@ function toggleCodePanel(){
 
         codePaused = true;
 
-
         codePanel.style.display =
             "block";
-
 
         for(
             const key in keys
         ){
-
             keys[key] = false;
-
         }
-
 
         setTimeout(
             () => {
-
                 codeInput.focus();
-
             },
             50
         );
@@ -1691,17 +1313,14 @@ function toggleCodePanel(){
 
         codePaused = false;
 
-
         codePanel.style.display =
             "none";
-
 
         codeInput.blur();
 
     }
 
 }
-
 
 closeCode.onclick = () => {
 
@@ -1723,13 +1342,11 @@ let cameraYaw = .5;
 
 let cameraPitch = .35;
 
-
 let dragging = false;
 
 let lastMouseX = 0;
 
 let lastMouseY = 0;
-
 
 renderer.domElement.addEventListener(
     "mousedown",
@@ -1737,13 +1354,10 @@ renderer.domElement.addEventListener(
 
         if(codePaused)return;
 
-
         dragging = true;
-
 
         lastMouseX =
             e.clientX;
-
 
         lastMouseY =
             e.clientY;
@@ -1751,16 +1365,12 @@ renderer.domElement.addEventListener(
     }
 );
 
-
 window.addEventListener(
     "mouseup",
     () => {
-
         dragging = false;
-
     }
 );
-
 
 window.addEventListener(
     "mousemove",
@@ -1770,33 +1380,25 @@ window.addEventListener(
             !dragging ||
             codePaused
         ){
-
             return;
-
         }
-
 
         const dx =
             e.clientX -
             lastMouseX;
 
-
         const dy =
             e.clientY -
             lastMouseY;
 
-
         lastMouseX =
             e.clientX;
-
 
         lastMouseY =
             e.clientY;
 
-
         cameraYaw -=
             dx * .006;
-
 
         cameraPitch =
             THREE.MathUtils.clamp(
@@ -1822,11 +1424,8 @@ renderer.domElement.addEventListener(
             !isMobile ||
             codePaused
         ){
-
             return;
-
         }
-
 
         for(
             const touch of e.changedTouches
@@ -1839,10 +1438,8 @@ renderer.domElement.addEventListener(
                 cameraTouchId =
                     touch.identifier;
 
-
                 cameraTouchX =
                     touch.clientX;
-
 
                 cameraTouchY =
                     touch.clientY;
@@ -1855,7 +1452,6 @@ renderer.domElement.addEventListener(
     {passive:false}
 );
 
-
 renderer.domElement.addEventListener(
     "touchmove",
     e => {
@@ -1864,11 +1460,8 @@ renderer.domElement.addEventListener(
             !isMobile ||
             codePaused
         ){
-
             return;
-
         }
-
 
         for(
             const touch of e.changedTouches
@@ -1883,23 +1476,18 @@ renderer.domElement.addEventListener(
                     touch.clientX -
                     cameraTouchX;
 
-
                 const dy =
                     touch.clientY -
                     cameraTouchY;
 
-
                 cameraTouchX =
                     touch.clientX;
-
 
                 cameraTouchY =
                     touch.clientY;
 
-
                 cameraYaw -=
                     dx * .006;
-
 
                 cameraPitch =
                     THREE.MathUtils.clamp(
@@ -1913,13 +1501,11 @@ renderer.domElement.addEventListener(
 
         }
 
-
         e.preventDefault();
 
     },
     {passive:false}
 );
-
 
 renderer.domElement.addEventListener(
     "touchend",
@@ -1950,18 +1536,6 @@ renderer.domElement.addEventListener(
    JOYSTICK
 ===================================================== */
 
-const joystickArea =
-    document.getElementById(
-        "joystickArea"
-    );
-
-
-const joystickStick =
-    document.getElementById(
-        "joystickStick"
-    );
-
-
 function updateJoystick(
     clientX,
     clientY
@@ -1970,38 +1544,31 @@ function updateJoystick(
     const rect =
         joystickArea.getBoundingClientRect();
 
-
     const centerX =
         rect.left +
         rect.width / 2;
-
 
     const centerY =
         rect.top +
         rect.height / 2;
 
-
     let dx =
         clientX -
         centerX;
-
 
     let dy =
         clientY -
         centerY;
 
-
     const max =
         rect.width *
         .32;
-
 
     const length =
         Math.sqrt(
             dx*dx +
             dy*dy
         );
-
 
     if(
         length > max
@@ -2011,48 +1578,39 @@ function updateJoystick(
             dx / length *
             max;
 
-
         dy =
             dy / length *
             max;
 
     }
 
-
     joystickStick.style.transform =
         `translate(${dx}px,${dy}px)`;
 
-
     mobileMoveX =
         dx / max;
-
 
     mobileMoveZ =
         dy / max;
 
 }
 
-
 function resetJoystick(){
 
     joystickActive =
         false;
 
-
     joystickPointerId =
         null;
-
 
     mobileMoveX = 0;
 
     mobileMoveZ = 0;
 
-
     joystickStick.style.transform =
         "translate(0px,0px)";
 
 }
-
 
 joystickArea.addEventListener(
     "pointerdown",
@@ -2060,17 +1618,14 @@ joystickArea.addEventListener(
 
         if(!isMobile)return;
 
-
         joystickActive = true;
 
         joystickPointerId =
             e.pointerId;
 
-
         joystickArea.setPointerCapture(
             e.pointerId
         );
-
 
         updateJoystick(
             e.clientX,
@@ -2079,7 +1634,6 @@ joystickArea.addEventListener(
 
     }
 );
-
 
 joystickArea.addEventListener(
     "pointermove",
@@ -2090,11 +1644,8 @@ joystickArea.addEventListener(
             e.pointerId !==
                 joystickPointerId
         ){
-
             return;
-
         }
-
 
         updateJoystick(
             e.clientX,
@@ -2104,12 +1655,10 @@ joystickArea.addEventListener(
     }
 );
 
-
 joystickArea.addEventListener(
     "pointerup",
     resetJoystick
 );
-
 
 joystickArea.addEventListener(
     "pointercancel",
@@ -2126,7 +1675,6 @@ jumpButton.addEventListener(
     e => {
 
         e.preventDefault();
-
 
         if(
             gameRunning &&
@@ -2152,11 +1700,8 @@ mobileCodeButton.addEventListener(
 
         e.preventDefault();
 
-
         if(gameRunning){
-
             toggleCodePanel();
-
         }
 
     }
@@ -2171,10 +1716,8 @@ function getTileUnderPlayer(){
 
     let best = null;
 
-
     let bestDistance =
         Infinity;
-
 
     for(
         const floor of floors
@@ -2184,35 +1727,26 @@ function getTileUnderPlayer(){
             floor.index *
             FLOOR_HEIGHT;
 
-
         const feetY =
             player.position.y;
-
 
         if(
             floorY >
             feetY + .6
         ){
-
             continue;
-
         }
-
 
         const verticalDistance =
             feetY -
             floorY;
 
-
         if(
             verticalDistance >
             8
         ){
-
             continue;
-
         }
-
 
         for(
             const tile of floor.tiles
@@ -2222,28 +1756,22 @@ function getTileUnderPlayer(){
                 !tile.visible ||
                 !tile.mesh.visible
             ){
-
                 continue;
-
             }
-
 
             const dx =
                 player.position.x -
                 tile.x;
 
-
             const dz =
                 player.position.z -
                 tile.z;
-
 
             const distance =
                 Math.sqrt(
                     dx*dx +
                     dz*dz
                 );
-
 
             if(
                 distance < 1.45 &&
@@ -2254,17 +1782,12 @@ function getTileUnderPlayer(){
                 bestDistance =
                     verticalDistance;
 
-
                 best = {
-
                     floor:floor,
-
                     tile:tile,
-
                     y:
                         floorY +
                         HEX_HEIGHT/2
-
                 };
 
             }
@@ -2272,7 +1795,6 @@ function getTileUnderPlayer(){
         }
 
     }
-
 
     return best;
 
@@ -2289,15 +1811,11 @@ function triggerTile(tile){
         !tile.visible ||
         tile.disappearing
     ){
-
         return;
-
     }
-
 
     tile.disappearing =
         true;
-
 
     tile.disappearTime =
         performance.now();
@@ -2314,46 +1832,35 @@ function death(){
     if(
         !gameRunning
     ){
-
         return;
-
     }
-
 
     gameRunning =
         false;
 
-
     codePaused =
         false;
-
 
     creatorFly =
         false;
 
-
     creatorPanel.style.display =
         "none";
-
 
     codePanel.style.display =
         "none";
 
-
     gameUI.style.display =
         "none";
 
-
     mobileControls.style.display =
         "none";
-
 
     playerVelocity.set(
         0,
         0,
         0
     );
-
 
     deathScreen.style.display =
         "flex";
@@ -2369,73 +1876,52 @@ function updatePlayer(delta){
 
     if(codePaused)return;
 
-
     const direction =
         new THREE.Vector3();
-
-
-    /* PC */
 
     if(
         keys["KeyW"] ||
         keys["ArrowUp"]
     ){
-
         direction.z -= 1;
-
     }
-
 
     if(
         keys["KeyS"] ||
         keys["ArrowDown"]
     ){
-
         direction.z += 1;
-
     }
-
 
     if(
         keys["KeyA"] ||
         keys["ArrowLeft"]
     ){
-
         direction.x -= 1;
-
     }
-
 
     if(
         keys["KeyD"] ||
         keys["ArrowRight"]
     ){
-
         direction.x += 1;
-
     }
-
-
-    /* CELULAR */
 
     if(isMobile){
 
         direction.x +=
             mobileMoveX;
 
-
         direction.z +=
             mobileMoveZ;
 
     }
-
 
     if(
         direction.length() > 0
     ){
 
         direction.normalize();
-
 
         const rotated =
             direction
@@ -2449,18 +1935,15 @@ function updatePlayer(delta){
                     cameraYaw
                 );
 
-
         const speed =
             creatorFly
             ? 12
             : 7;
 
-
         player.position.x +=
             rotated.x *
             speed *
             delta;
-
 
         player.position.z +=
             rotated.z *
@@ -2469,63 +1952,45 @@ function updatePlayer(delta){
 
     }
 
-
-    /* CREADOR */
-
     if(creatorFly){
 
         playerVelocity.y = 0;
 
-
         if(
             keys["Space"]
         ){
-
             player.position.y +=
                 12 * delta;
-
         }
-
 
         if(
             keys["ControlLeft"] ||
             keys["ControlRight"]
         ){
-
             player.position.y -=
                 12 * delta;
-
         }
 
-
         keys["Space"] = false;
-
 
         return;
 
     }
 
-
-    /* GRAVEDAD */
-
     playerVelocity.y -=
         25 * delta;
-
 
     player.position.y +=
         playerVelocity.y *
         delta;
 
-
     const ground =
         getTileUnderPlayer();
-
 
     if(ground){
 
         const targetY =
             ground.y;
-
 
         if(
             playerVelocity.y <= 0 &&
@@ -2536,18 +2001,14 @@ function updatePlayer(delta){
             player.position.y =
                 targetY;
 
-
             playerVelocity.y =
                 0;
-
 
             isGrounded =
                 true;
 
-
             currentFloor =
                 ground.floor.index;
-
 
             triggerTile(
                 ground.tile
@@ -2564,9 +2025,6 @@ function updatePlayer(delta){
 
     }
 
-
-    /* SALTO */
-
     if(
         keys["Space"] &&
         isGrounded
@@ -2575,22 +2033,16 @@ function updatePlayer(delta){
         playerVelocity.y =
             10;
 
-
         isGrounded =
             false;
-
 
         keys["Space"] =
             false;
 
     }
 
-
-    /* LÍMITES */
-
     const limit =
         FLOOR_SIZE/2 - 1;
-
 
     player.position.x =
         THREE.MathUtils.clamp(
@@ -2599,16 +2051,12 @@ function updatePlayer(delta){
             limit
         );
 
-
     player.position.z =
         THREE.MathUtils.clamp(
             player.position.z,
             -limit,
             limit
         );
-
-
-    /* MUERTE POR CAÍDA */
 
     if(
         player.position.y <
@@ -2632,10 +2080,8 @@ function updateTiles(){
 
     if(codePaused)return;
 
-
     const now =
         performance.now();
-
 
     for(
         const floor of floors
@@ -2648,25 +2094,18 @@ function updateTiles(){
             if(
                 !tile.disappearing
             ){
-
                 continue;
-
             }
-
 
             const elapsed =
                 now -
                 tile.disappearTime;
 
-
             if(
                 elapsed < 1000
             ){
-
                 continue;
-
             }
-
 
             const progress =
                 Math.min(
@@ -2677,11 +2116,9 @@ function updateTiles(){
                     1
                 );
 
-
             const scale =
                 1 -
                 progress;
-
 
             tile.mesh.scale.set(
                 scale,
@@ -2689,14 +2126,12 @@ function updateTiles(){
                 scale
             );
 
-
             if(
                 progress >= 1
             ){
 
                 tile.visible =
                     false;
-
 
                 tile.mesh.visible =
                     false;
@@ -2718,20 +2153,17 @@ function updateCamera(delta){
 
     const distance = 12;
 
-
     const horizontal =
         Math.cos(
             cameraPitch
         ) *
         distance;
 
-
     const height =
         Math.sin(
             cameraPitch
         ) *
         distance;
-
 
     const x =
         player.position.x +
@@ -2740,7 +2172,6 @@ function updateCamera(delta){
         ) *
         horizontal;
 
-
     const z =
         player.position.z +
         Math.cos(
@@ -2748,12 +2179,10 @@ function updateCamera(delta){
         ) *
         horizontal;
 
-
     const y =
         player.position.y +
         4 +
         height;
-
 
     const target =
         new THREE.Vector3(
@@ -2761,7 +2190,6 @@ function updateCamera(delta){
             y,
             z
         );
-
 
     camera.position.lerp(
         target,
@@ -2774,7 +2202,6 @@ function updateCamera(delta){
             )
         )
     );
-
 
     camera.lookAt(
         player.position.x,
@@ -2794,22 +2221,17 @@ function randomGameTime(){
     const r =
         Math.random();
 
-
     if(r < .50)
         return 60;
-
 
     if(r < .75)
         return 45;
 
-
     if(r < .95)
         return 20;
 
-
     if(r < .995)
         return 5;
-
 
     return 0;
 
@@ -2826,31 +2248,23 @@ function victory(){
         !gameRunning ||
         codePaused
     ){
-
         return;
-
     }
-
 
     gameRunning =
         false;
-
 
     wins += 1;
 
     coins += 100;
 
-
     saveData();
-
 
     gameUI.style.display =
         "none";
 
-
     mobileControls.style.display =
         "none";
-
 
     victoryScreen.style.display =
         "flex";
@@ -2875,18 +2289,14 @@ function resetTiles(){
             tile.visible =
                 true;
 
-
             tile.disappearing =
                 false;
-
 
             tile.disappearTime =
                 0;
 
-
             tile.mesh.visible =
                 true;
-
 
             tile.mesh.scale.set(
                 1,
@@ -2910,22 +2320,17 @@ function startGame(){
     menu.style.display =
         "none";
 
-
     shop.style.display =
         "none";
-
 
     victoryScreen.style.display =
         "none";
 
-
     deathScreen.style.display =
         "none";
 
-
     gameUI.style.display =
         "block";
-
 
     if(isMobile){
 
@@ -2934,9 +2339,7 @@ function startGame(){
 
     }
 
-
     resetTiles();
-
 
     selectedAnimal =
         localStorage.getItem(
@@ -2944,9 +2347,7 @@ function startGame(){
         ) ||
         "dog";
 
-
     updatePlayerAppearance();
-
 
     player.position.set(
         0,
@@ -2955,48 +2356,37 @@ function startGame(){
         0
     );
 
-
     playerVelocity.set(
         0,
         0,
         0
     );
 
-
     isGrounded =
         true;
-
 
     currentFloor =
         5;
 
-
     creatorFly =
         false;
-
 
     creatorPanel.style.display =
         "none";
 
-
     codePaused =
         false;
-
 
     codePanel.style.display =
         "none";
 
-
     gameTime =
         randomGameTime();
-
 
     gameRunning =
         true;
 
-
     resetJoystick();
-
 
     if(
         gameTime === 0
@@ -3004,17 +2394,13 @@ function startGame(){
 
         coins += 500;
 
-
         saveData();
-
 
         setTimeout(
             () => {
 
                 if(gameRunning){
-
                     victory();
-
                 }
 
             },
@@ -3022,7 +2408,6 @@ function startGame(){
         );
 
     }
-
 
     updateUI();
 
@@ -3038,10 +2423,8 @@ function updateUI(){
     menuCoins.textContent =
         coins;
 
-
     menuWins.textContent =
         wins;
-
 
     timer.textContent =
         gameTime === 0
@@ -3050,7 +2433,6 @@ function updateUI(){
           Math.ceil(
               gameTime
           );
-
 
     floorText.textContent =
         "Piso: " +
@@ -3074,12 +2456,10 @@ function saveData(){
         coins
     );
 
-
     localStorage.setItem(
         "towerWins",
         wins
     );
-
 
     localStorage.setItem(
         "towerAnimals",
@@ -3088,24 +2468,20 @@ function saveData(){
         )
     );
 
-
     localStorage.setItem(
         "towerSelected",
         selectedAnimal
     );
-
 
     localStorage.setItem(
         "creatorUnlocked",
         creatorUnlocked
     );
 
-
     localStorage.setItem(
         "motorcycleUnlocked",
         motorcycleUnlocked
     );
-
 
     localStorage.setItem(
         "usedCodes",
@@ -3126,7 +2502,6 @@ function renderShop(){
     shopItems.innerHTML =
         "";
 
-
     for(
         const animal of animals
     ){
@@ -3136,16 +2511,13 @@ function renderShop(){
                 "div"
             );
 
-
         div.className =
             "shopItem";
-
 
         const unlocked =
             unlockedAnimals.includes(
                 animal.id
             );
-
 
         div.innerHTML = `
 
@@ -3180,12 +2552,10 @@ function renderShop(){
 
         `;
 
-
         const button =
             div.querySelector(
                 "button"
             );
-
 
         if(unlocked){
 
@@ -3195,12 +2565,9 @@ function renderShop(){
                     selectedAnimal =
                         animal.id;
 
-
                     saveData();
 
-
                     updatePlayerAppearance();
-
 
                     renderShop();
 
@@ -3223,28 +2590,21 @@ function renderShop(){
                         coins -=
                             animal.price;
 
-
                         wins -=
                             animal.winPrice;
-
 
                         unlockedAnimals.push(
                             animal.id
                         );
 
-
                         selectedAnimal =
                             animal.id;
 
-
                         saveData();
-
 
                         updateUI();
 
-
                         renderShop();
-
 
                         showMessage(
                             animal.name +
@@ -3265,15 +2625,12 @@ function renderShop(){
 
         }
 
-
         shopItems.appendChild(
             div
         );
 
     }
 
-
-    /* SPIDER-MAN */
 
     if(
         unlockedAnimals.includes(
@@ -3286,10 +2643,8 @@ function renderShop(){
                 "div"
             );
 
-
         div.className =
             "shopItem";
-
 
         div.innerHTML = `
 
@@ -3322,7 +2677,6 @@ function renderShop(){
 
         `;
 
-
         div.querySelector(
             "button"
         ).onclick =
@@ -3331,17 +2685,13 @@ function renderShop(){
                 selectedAnimal =
                     "spider";
 
-
                 saveData();
 
-
                 updatePlayerAppearance();
-
 
                 renderShop();
 
             };
-
 
         shopItems.appendChild(
             div
@@ -3349,8 +2699,6 @@ function renderShop(){
 
     }
 
-
-    /* MOTOCICLETA */
 
     if(
         motorcycleUnlocked
@@ -3361,10 +2709,8 @@ function renderShop(){
                 "div"
             );
 
-
         div.className =
             "shopItem";
-
 
         div.innerHTML = `
 
@@ -3388,7 +2734,6 @@ function renderShop(){
 
         `;
 
-
         div.querySelector(
             "button"
         ).onclick =
@@ -3399,7 +2744,6 @@ function renderShop(){
                 );
 
             };
-
 
         shopItems.appendChild(
             div
@@ -3416,21 +2760,17 @@ function renderShop(){
 
 let messageTimeout;
 
-
 function showMessage(text){
 
     message.textContent =
         text;
 
-
     message.style.display =
         "block";
-
 
     clearTimeout(
         messageTimeout
     );
-
 
     messageTimeout =
         setTimeout(
@@ -3456,9 +2796,6 @@ redeemCode.onclick =
         const code =
             codeInput.value.trim();
 
-
-        /* SPIDER */
-
         if(
             code === "spider"
         ){
@@ -3473,12 +2810,9 @@ redeemCode.onclick =
                     "spider"
                 );
 
-
                 saveData();
 
-
                 renderShop();
-
 
                 showMessage(
                     "¡Spider-Man desbloqueado! Ya aparece en ALMACÉN."
@@ -3494,17 +2828,13 @@ redeemCode.onclick =
 
             }
 
-
             codeInput.value =
                 "";
-
 
             return;
 
         }
 
-
-        /* TOWER */
 
         if(
             code === "TOWER"
@@ -3520,50 +2850,38 @@ redeemCode.onclick =
                     "Ese código ya fue utilizado."
                 );
 
-
                 return;
 
             }
-
 
             usedCodes.push(
                 "TOWER"
             );
 
-
             wins += 100;
 
             coins += 100000;
 
-
             motorcycleUnlocked =
                 true;
 
-
             saveData();
-
 
             renderShop();
 
-
             updateUI();
-
 
             showMessage(
                 "¡TOWER activado! +100 victorias, +100000 monedas y motocicleta desbloqueada."
             );
 
-
             codeInput.value =
                 "";
-
 
             return;
 
         }
 
-
-        /* CREATOR */
 
         if(
             code === "CREATOR"
@@ -3584,9 +2902,7 @@ redeemCode.onclick =
                 creatorUnlocked =
                     true;
 
-
                 saveData();
-
 
                 showMessage(
                     "Modo Creador desbloqueado. Ahora puedes usar M."
@@ -3594,15 +2910,12 @@ redeemCode.onclick =
 
             }
 
-
             codeInput.value =
                 "";
-
 
             return;
 
         }
-
 
         showMessage(
             "Código incorrecto."
@@ -3617,11 +2930,8 @@ redeemCode.onclick =
 
 playBtn.onclick =
     () => {
-
         startGame();
-
     };
-
 
 shopBtn.onclick =
     () => {
@@ -3629,15 +2939,12 @@ shopBtn.onclick =
         menu.style.display =
             "none";
 
-
         shop.style.display =
             "block";
-
 
         renderShop();
 
     };
-
 
 closeShop.onclick =
     () => {
@@ -3645,15 +2952,12 @@ closeShop.onclick =
         shop.style.display =
             "none";
 
-
         menu.style.display =
             "flex";
-
 
         updateUI();
 
     };
-
 
 victoryBtn.onclick =
     () => {
@@ -3661,23 +2965,18 @@ victoryBtn.onclick =
         victoryScreen.style.display =
             "none";
 
-
         gameUI.style.display =
             "none";
-
 
         mobileControls.style.display =
             "none";
 
-
         menu.style.display =
             "flex";
-
 
         updateUI();
 
     };
-
 
 deathBtn.onclick =
     () => {
@@ -3685,18 +2984,14 @@ deathBtn.onclick =
         deathScreen.style.display =
             "none";
 
-
         gameUI.style.display =
             "none";
-
 
         mobileControls.style.display =
             "none";
 
-
         menu.style.display =
             "flex";
-
 
         updateUI();
 
@@ -3710,17 +3005,14 @@ deathBtn.onclick =
 let lastTime =
     performance.now();
 
-
 function animate(){
 
     requestAnimationFrame(
         animate
     );
 
-
     const now =
         performance.now();
-
 
     const delta =
         Math.min(
@@ -3731,17 +3023,13 @@ function animate(){
             .05
         );
 
-
     lastTime =
         now;
-
 
     if(
         gameRunning &&
         !codePaused
     ){
-
-        /* TIEMPO */
 
         if(
             gameTime > 0
@@ -3750,7 +3038,6 @@ function animate(){
             gameTime -=
                 delta;
 
-
             if(
                 gameTime <= 0
             ){
@@ -3758,27 +3045,21 @@ function animate(){
                 gameTime =
                     0;
 
-
                 victory();
 
             }
 
         }
 
-
         updatePlayer(
             delta
         );
-
 
         if(
             gameRunning
         ){
 
             updateTiles();
-
-
-            /* LLEGAR A LA CIMA */
 
             if(
                 currentFloor >=
@@ -3791,13 +3072,11 @@ function animate(){
 
             }
 
-
             updateUI();
 
         }
 
     }
-
 
     updateCamera(
         codePaused
@@ -3805,14 +3084,12 @@ function animate(){
         : delta
     );
 
-
     renderer.render(
         scene,
         camera
     );
 
 }
-
 
 animate();
 
@@ -3829,9 +3106,7 @@ window.addEventListener(
             innerWidth /
             innerHeight;
 
-
         camera.updateProjectionMatrix();
-
 
         renderer.setSize(
             innerWidth,
@@ -3853,7 +3128,6 @@ if(isMobile){
 
 }
 
-
 updatePlayerAppearance();
 
 updateUI();
@@ -3862,3 +3136,4 @@ updateUI();
 
 </body>
 </html>
+```
